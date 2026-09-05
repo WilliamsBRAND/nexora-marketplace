@@ -77,6 +77,8 @@ export default async function handler(req, res) {
   // Verified: success + correct amount. Log to Google Sheet via Apps Script webhook.
   const sheetWebhook = process.env.SHEET_WEBHOOK_URL || "";
   let logged = false;
+  const source = partner ? `Affiliate (${partner})` : "Organic (Marketplace)";
+
   if (sheetWebhook) {
     try {
       const fp = new URL(sheetWebhook);
@@ -86,6 +88,7 @@ export default async function handler(req, res) {
       fp.searchParams.set("reference", reference);
       fp.searchParams.set("status", status);
       fp.searchParams.set("partner", partner || "");
+      fp.searchParams.set("source", source);
       const sr = await fetch(fp.toString(), { method: "POST" });
       logged = sr.ok;
     } catch (err) {
