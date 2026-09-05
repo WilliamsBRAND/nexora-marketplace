@@ -1,0 +1,12 @@
+{
+  "name": "nexora-marketplace",
+  "version": "1.0.0",
+  "description": "NEXORA Marketplace Store",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  }
+}
