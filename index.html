@@ -3151,7 +3151,7 @@ function toggleFaq(el) {
 <div id="proofLightbox" class="proof-modal-backdrop" onclick="closeProofModal(event)">
   <div class="proof-modal-card" onclick="event.stopPropagation()">
     <div class="proof-modal-header">
-      <div id="proofModalTag" class="proof-modal-title">Proof Preview</div>
+      <div id="proofModalTag" class="proof-modal-title">Verified Proof</div>
       <button class="proof-modal-close" onclick="closeProofModal()">&times;</button>
     </div>
     <div class="proof-modal-body">
@@ -3161,9 +3161,9 @@ function toggleFaq(el) {
 </div>
 
 <script>
-function openProofModal(src, tag, caption) {
+function openProofModal(src, caption) {
   document.getElementById('proofModalImg').src = src;
-  document.getElementById('proofModalTag').textContent = tag + ' Â· ' + caption;
+  document.getElementById('proofModalTag').textContent = caption;
   document.getElementById('proofLightbox').classList.add('active');
 }
 function closeProofModal(e) {
