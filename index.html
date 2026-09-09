@@ -3147,5 +3147,33 @@ function toggleFaq(el) {
 })();
 
 </script>
+<!-- PROOF LIGHTBOX MODAL -->
+<div id="proofLightbox" class="proof-modal-backdrop" onclick="closeProofModal(event)">
+  <div class="proof-modal-card" onclick="event.stopPropagation()">
+    <div class="proof-modal-header">
+      <div id="proofModalTag" class="proof-modal-title">Proof Preview</div>
+      <button class="proof-modal-close" onclick="closeProofModal()">&times;</button>
+    </div>
+    <div class="proof-modal-body">
+      <img id="proofModalImg" class="proof-modal-img" src="" alt="Proof Preview">
+    </div>
+  </div>
+</div>
+
+<script>
+function openProofModal(src, tag, caption) {
+  document.getElementById('proofModalImg').src = src;
+  document.getElementById('proofModalTag').textContent = tag + ' Â· ' + caption;
+  document.getElementById('proofLightbox').classList.add('active');
+}
+function closeProofModal(e) {
+  if (!e || e.target.id === 'proofLightbox' || e.target.classList.contains('proof-modal-close')) {
+    document.getElementById('proofLightbox').classList.remove('active');
+  }
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeProofModal();
+});
+</script>
 </body>
 </html>
