@@ -1,19 +1,7 @@
 // NEXORA — Verified Customer Feedback & Review API
 import { getDb, json } from './_db.js';
 
-const INITIAL_REVIEWS = [
-  {
-    id: "review-tom",
-    name: "tom",
-    role: "Developer | Angola",
-    rating: 5,
-    comment: "This is good",
-    review: "This is good",
-    avatar: "",
-    verified: true,
-    date: "2026-09-05T07:44:32.669Z"
-  }
-];
+const INITIAL_REVIEWS = [];
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
