@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Your Feedback &middot; NEXORA</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #09090b;
+  --card: #121215;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --input-bg: #18181c;
+  --input-border: rgba(255, 255, 255, 0.1);
+  --text: #f4f4f5;
+  --muted: #a1a1aa;
+  --muted-soft: #71717a;
+  --crimson: #7A0A15;
+  --crimson-hover: #9B0D1A;
+  --gold: #fbbf24;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* Simple Clean Top Navigation */
+.nav-wrap {
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.brand-link svg {
+  width: 26px;
+  height: 26px;
+}
+.back-btn {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+.back-btn:hover {
+  color: #fff;
+}
+
+/* Page Layout */
+.main-container {
+  max-width: 580px;
+  width: 100%;
+  margin: 44px auto 80px;
+  padding: 0 24px;
+  flex: 1;
+}
+
+/* Card */
+.feedback-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 44px 38px;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 640px) {
+  .main-container {
+    margin: 20px auto 44px;
+    padding: 0 16px;
+  }
+  .feedback-card {
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+}
+
+/* Typography / Header */
+.header-area {
+  margin-bottom: 32px;
+}
+.main-title {
+  font-family: 'Archivo', sans-serif;
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.sub-headline {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: #e4e4e7;
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+.helper-text {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 22px;
+}
+.form-label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #f4f4f5;
+  margin-bottom: 8px;
+}
+.opt-label {
+  font-weight: 400;
+  color: var(--muted-soft);
+  font-size: 12.5px;
+  margin-left: 4px;
+}
+
+.text-input, .text-area {
+  width: 100%;
+  padding: 13.5px 16px;
+  font-family: inherit;
+  font-size: 14.5px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+.text-input::placeholder, .text-area::placeholder {
+  color: #52525b;
+}
+.text-input:focus, .text-area:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: #1c1c22;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+.text-area {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Star Rating */
+.star-rating-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+.stars-row {
+  display: flex;
+  gap: 6px;
+  cursor: pointer;
+}
+.star-item {
+  font-size: 28px;
+  color: #3f3f46;
+  transition: transform 0.15s ease, color 0.15s ease;
+  user-select: none;
+  line-height: 1;
+}
+.star-item.active {
+  color: var(--gold);
+}
+.star-item:hover {
+  transform: scale(1.15);
+}
+.rating-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* Photo Upload */
+.photo-uploader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.photo-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #27272a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.photo-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.photo-avatar svg {
+  width: 20px;
+  height: 20px;
+  color: #71717a;
+}
+.photo-meta {
+  flex: 1;
+}
+.photo-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.btn-choose-photo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-choose-photo:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.btn-remove-photo {
+  background: none;
+  border: none;
+  color: #f87171;
+  font-size: 12px;
+  cursor: pointer;
+  display: none;
+  padding: 4px 6px;
+}
+.btn-remove-photo:hover {
+  text-decoration: underline;
+}
+.photo-description {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Submit Button */
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  margin-top: 12px;
+  background: linear-gradient(135deg, var(--crimson-hover), var(--crimson));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Archivo', sans-serif;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 30px -10px rgba(122, 10, 21, 0.5);
+}
+.btn-submit:hover {
+  background: linear-gradient(135deg, #b31020, var(--crimson-hover));
+  transform: translateY(-1px);
+  box-shadow: 0 14px 36px -10px rgba(155, 13, 26, 0.65);
+}
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Error Message */
+.error-box {
+  color: #f87171;
+  font-size: 13.5px;
+  margin-bottom: 14px;
+  display: none;
+}
+
+/* Success View */
+.success-view {
+  display: none;
+  text-align: center;
+  padding: 12px 0;
+}
+.success-check {
+  width: 64px;
+  height: 64px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1.5px solid #22c55e;
+  color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin: 0 auto 20px;
+}
+.success-heading {
+  font-family: 'Archivo', sans-serif;
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.success-message {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 440px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+.btn-whatsapp-community {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #25D366;
+  color: #fff;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 15.5px;
+  padding: 16px 28px;
+  border-radius: 12px;
+  box-shadow: 0 16px 36px -10px rgba(37, 211, 102, 0.55);
+  transition: all 0.15s ease;
+  width: 100%;
+  max-width: 440px;
+}
+.btn-whatsapp-community:hover {
+  background: #1eb857;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px -12px rgba(37, 211, 102, 0.65);
+}
+.btn-whatsapp-community svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-wrap">
+  <div class="brand-link">
+    <svg viewBox="0 0 100 100" fill="none" aria-label="Tomide Williams">
+      <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+      <path d="M 25 35 L 75 35" stroke="#7A0A15" stroke-width="7" stroke-linecap="square"/>
+      <path d="M 50 35 L 50 75" stroke="#7A0A15" stroke-width="7" stroke-linecap="square"/>
+      <path d="M 20 25 L 35 80 L 50 55 L 65 80 L 80 25" stroke="#050505" stroke-width="12" stroke-linejoin="bevel"/>
+      <path d="M 20 25 L 35 80 L 50 55 L 65 80 L 80 25" stroke="#ffffff" stroke-width="4" stroke-linejoin="bevel"/>
+    </svg>
+    <span>NEXORA</span>
+  </div>
+  <a href="https://chat.whatsapp.com/LNC6ABmpaFN5b6we3ZuEpp" target="_blank" rel="noopener" class="back-btn" style="color:#f87171;font-weight:700;display:inline-flex;align-items:center;gap:6px;">
+    Join Community &rarr;
+  </a>
+</nav>
+
+<main class="main-container">
+  <div class="feedback-card">
+
+    <!-- FORM VIEW -->
+    <div id="formView">
+      <div class="header-area">
+        <h1 class="main-title">Share Your Feedback</h1>
+        <div class="sub-headline">What would you tell someone considering NEXORA?</div>
+        <p class="helper-text">Share why you decided to pre-order, what stood out to you, or why you believe NEXORA will be valuable. Your words could help someone decide if it is right for them.</p>
+      </div>
+
+      <form id="feedbackForm" onsubmit="submitFeedback(event)">
+        
+        <!-- Star Rating -->
+        <div class="form-group">
+          <label class="form-label">Overall Rating</label>
+          <div class="star-rating-wrap">
+            <div class="stars-row" id="starContainer">
+              <span class="star-item active" data-val="1">&#9733;</span>
+              <span class="star-item active" data-val="2">&#9733;</span>
+              <span class="star-item active" data-val="3">&#9733;</span>
+              <span class="star-item active" data-val="4">&#9733;</span>
+              <span class="star-item active" data-val="5">&#9733;</span>
+            </div>
+            <span class="rating-text" id="ratingLabel">5.0 / 5.0 (Excellent)</span>
+          </div>
+          <input type="hidden" id="starRating" value="5" />
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label" for="custName">Your Name</label>
+          <input type="text" id="custName" class="text-input" placeholder="e.g. Samuel Adekunle" required />
+        </div>
+
+        <!-- Profession or Location -->
+        <div class="form-group">
+          <label class="form-label" for="custRole">Profession or Location <span class="opt-label">(Optional)</span></label>
+          <input type="text" id="custRole" class="text-input" placeholder="e.g. Software Builder · Lagos" />
+        </div>
+
+        <!-- Profile Photo -->
+        <div class="form-group">
+          <label class="form-label">Profile Photo <span class="opt-label">(Optional)</span></label>
+          <div class="photo-uploader">
+            <div class="photo-avatar" id="avatarBox">
+              <svg id="avatarPlaceholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <img id="avatarPreview" alt="Profile preview" />
+            </div>
+            <div class="photo-meta">
+              <div class="photo-actions">
+                <label for="photoFile" class="btn-choose-photo">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <span>Upload Photo</span>
+                </label>
+                <button type="button" class="btn-remove-photo" id="btnRemovePhoto" onclick="removePhoto()">Remove</button>
+              </div>
+              <input type="file" id="photoFile" accept="image/*" style="display:none;" onchange="handlePhotoSelect(event)" />
+              <div class="photo-description">Add a photo if you would like it displayed alongside your feedback.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="form-group">
+          <label class="form-label" for="custFeedback">Your Feedback</label>
+          <textarea id="custFeedback" class="text-area" placeholder="Write your thoughts here..." required></textarea>
+        </div>
+
+        <input type="hidden" id="custEmail" value="" />
+        <input type="hidden" id="custRef" value="" />
+
+        <div id="errorBox" class="error-box"></div>
+
+        <button type="submit" class="btn-submit" id="btnSubmit">
+          Submit Feedback
+        </button>
+      </form>
+    </div>
+
+    <!-- SUCCESS VIEW (JOIN COMMUNITY) -->
+    <div class="success-view" id="successView">
+      <div class="success-check">&#10003;</div>
+      <h2 class="success-heading">Thank You, <span id="confName">Learner</span>!</h2>
+      <p class="success-message">Your feedback has been received. Join fellow builders and professionals in the private WhatsApp community now:</p>
+      <div style="display:flex;justify-content:center;">
+        <a href="https://chat.whatsapp.com/LNC6ABmpaFN5b6we3ZuEpp" target="_blank" rel="noopener" class="btn-whatsapp-community">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.19-.34.22-.63.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.21 5.1 4.5.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.45 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23z"/></svg>
+          <span>Join the NEXORA Community &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+var currentRating = 5;
+var uploadedPhotoBase64 = '';
+
+var ratingLabels = {
+  1: '1.0 / 5.0 (Poor)',
+  2: '2.0 / 5.0 (Fair)',
+  3: '3.0 / 5.0 (Good)',
+  4: '4.0 / 5.0 (Very Good)',
+  5: '5.0 / 5.0 (Excellent)'
+};
+
+// Pre-fill name and email from URL parameters or localStorage
+(function() {
+  var qs = new URLSearchParams(window.location.search);
+  var name = qs.get('name') || '';
+  var email = qs.get('email') || '';
+  var ref = qs.get('ref') || '';
+
+  try {
+    if (!name) name = localStorage.getItem('nexora_cust_name') || sessionStorage.getItem('nexora_cust_name') || '';
+    if (!email) email = localStorage.getItem('nexora_cust_email') || sessionStorage.getItem('nexora_cust_email') || '';
+  } catch (e) {}
+
+  if (name) document.getElementById('custName').value = name;
+  if (email) document.getElementById('custEmail').value = email;
+  if (ref) document.getElementById('custRef').value = ref;
+
+  initStars();
+})();
+
+function initStars() {
+  var stars = document.querySelectorAll('.star-item');
+  stars.forEach(function(s) {
+    s.addEventListener('click', function() {
+      var val = parseInt(this.getAttribute('data-val'), 10);
+      setRating(val);
+    });
+    s.addEventListener('mouseenter', function() {
+      var val = parseInt(this.getAttribute('data-val'), 10);
+      highlightStars(val);
+    });
+  });
+
+  document.getElementById('starContainer').addEventListener('mouseleave', function() {
+    highlightStars(currentRating);
+  });
+}
+
+function highlightStars(val) {
+  var stars = document.querySelectorAll('.star-item');
+  stars.forEach(function(s) {
+    var sVal = parseInt(s.getAttribute('data-val'), 10);
+    if (sVal <= val) s.classList.add('active');
+    else s.classList.remove('active');
+  });
+}
+
+function setRating(val) {
+  currentRating = val;
+  document.getElementById('starRating').value = val;
+  document.getElementById('ratingLabel').textContent = ratingLabels[val] || (val + '.0 / 5.0');
+  highlightStars(val);
+}
+
+// Handle Photo File Selection & Optimization
+function handlePhotoSelect(e) {
+  var file = e.target.files && e.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    alert('Please select a valid image file (JPG, PNG, or WebP).');
+    return;
+  }
+
+  var reader = new FileReader();
+  reader.onload = function(evt) {
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var size = 200;
+      canvas.width = size;
+      canvas.height = size;
+      var ctx = canvas.getContext('2d');
+
+      var minDim = Math.min(img.width, img.height);
+      var sx = (img.width - minDim) / 2;
+      var sy = (img.height - minDim) / 2;
+      ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
+
+      uploadedPhotoBase64 = canvas.toDataURL('image/jpeg', 0.85);
+
+      var pImg = document.getElementById('avatarPreview');
+      var pSvg = document.getElementById('avatarPlaceholder');
+      var rBtn = document.getElementById('btnRemovePhoto');
+
+      pImg.src = uploadedPhotoBase64;
+      pImg.style.display = 'block';
+      pSvg.style.display = 'none';
+      rBtn.style.display = 'inline-block';
+    };
+    img.src = evt.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto() {
+  uploadedPhotoBase64 = '';
+  document.getElementById('photoFile').value = '';
+  var pImg = document.getElementById('avatarPreview');
+  var pSvg = document.getElementById('avatarPlaceholder');
+  var rBtn = document.getElementById('btnRemovePhoto');
+
+  pImg.style.display = 'none';
+  pImg.src = '';
+  pSvg.style.display = 'block';
+  rBtn.style.display = 'none';
+}
+
+function submitFeedback(e) {
+  e.preventDefault();
+  var name = document.getElementById('custName').value.trim();
+  var role = document.getElementById('custRole').value.trim();
+  var feedback = document.getElementById('custFeedback').value.trim();
+  var email = document.getElementById('custEmail').value.trim();
+  var ref = document.getElementById('custRef').value.trim();
+  var rating = currentRating;
+  var btn = document.getElementById('btnSubmit');
+  var err = document.getElementById('errorBox');
+
+  if (!name) {
+    err.textContent = 'Please enter your name.';
+    err.style.display = 'block';
+    return;
+  }
+
+  if (!feedback) {
+    err.textContent = 'Please enter your feedback.';
+    err.style.display = 'block';
+    return;
+  }
+
+  if (!rating || rating < 1 || rating > 5) {
+    err.textContent = 'Please select a star rating.';
+    err.style.display = 'block';
+    return;
+  }
+
+  err.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  var payload = {
+    name: name,
+    role: role || 'Verified Pre-Order Member',
+    comment: feedback,
+    review: feedback,
+    avatar: uploadedPhotoBase64 || '',
+    email: email,
+    reference: ref,
+    rating: rating
+  };
+
+  fetch('/api/feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Feedback';
+    if (d && d.ok) {
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('confName').textContent = name.split(' ')[0] || name;
+      document.getElementById('successView').style.display = 'block';
+    } else {
+      err.textContent = (d && d.error) || 'Could not submit feedback. Please try again.';
+      err.style.display = 'block';
+    }
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Submit Feedback';
+    err.textContent = 'Network error. Please try again.';
+    err.style.display = 'block';
+  });
+}
+</script>
+</body>
+</html>

@@ -150,17 +150,17 @@ svg { display: block; }
   width: 100%;
 }
 
-/* ---- PRODUCT HERO SHOWCASE (DESKTOP: 70% IMAGE / 30% MARKETPLACE UI) ---- */
+/* ---- PRODUCT HERO SHOWCASE (DESKTOP: BALANCED, SPACIOUS & BREATHING) ---- */
 .product-hero {
   display: grid;
-  grid-template-columns: 2.3fr 1fr;
-  gap: 32px;
+  grid-template-columns: 1.12fr 1fr;
+  gap: 44px;
   align-items: start;
-  margin-bottom: 60px;
+  margin-bottom: 56px;
   width: 100%;
 }
 
-/* Gallery (70% column) */
+/* Gallery Column */
 .gallery-wrap {
   position: sticky;
   top: 90px;
@@ -172,7 +172,7 @@ svg { display: block; }
   border-radius: 18px;
   overflow: hidden;
   position: relative;
-  aspect-ratio: 16 / 10.5;
+  aspect-ratio: 16 / 10.8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -192,14 +192,14 @@ svg { display: block; }
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #fff;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   white-space: nowrap;
 }
 .img-badge::before {
@@ -213,8 +213,8 @@ svg { display: block; }
 
 .thumbs-row {
   display: flex;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 12px;
   overflow-x: auto;
   padding-bottom: 6px;
   -webkit-overflow-scrolling: touch;
@@ -225,9 +225,9 @@ svg { display: block; }
 .thumbs-row::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 4px; }
 
 .thumb-btn {
-  flex: 0 0 68px;
-  height: 48px;
-  border-radius: 8px;
+  flex: 0 0 72px;
+  height: 50px;
+  border-radius: 10px;
   border: 2px solid transparent;
   background: #181818;
   overflow: hidden;
@@ -243,14 +243,14 @@ svg { display: block; }
 }
 .thumb-btn.active, .thumb-btn:hover {
   border-color: var(--crimson);
-  box-shadow: 0 0 10px var(--crimson-glow);
+  box-shadow: 0 0 12px var(--crimson-glow);
 }
 
-/* Product Details (Conservative 30% Marketplace UI) */
+/* Product Details (Spacious, Breathing Right Column) */
 .product-details {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -258,90 +258,96 @@ svg { display: block; }
 .creator-meta-block {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  margin-bottom: 2px;
 }
 .creator-text-line {
-  font-size: 12px;
+  font-size: 13.5px;
   color: #a1a1aa;
-  line-height: 1.35;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 .creator-text-line .c-by { color: #71717a; }
 .creator-text-line .c-name { color: #ffffff; font-weight: 700; }
-.creator-text-line .c-sep { color: rgba(255, 255, 255, 0.25); margin: 0 3px; }
-.creator-text-line .c-role { color: #e88a93; font-weight: 600; }
+.creator-text-line .c-sep { color: rgba(255, 255, 255, 0.25); margin: 0 4px; }
+.creator-text-line .c-role { color: #f87171; font-weight: 600; }
 
 .proof-text-line {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  color: #4ade80;
-  line-height: 1.35;
+  gap: 8px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 .stars-gold {
   color: #fbbf24;
-  font-size: 12px;
-  letter-spacing: 1.5px;
+  font-size: 13px;
+  letter-spacing: 2px;
 }
 .proof-count {
-  color: #86efac;
-  font-weight: 500;
+  color: #4ade80;
+  font-weight: 600;
 }
 
 .product-h1 {
   font-family: 'Archivo', sans-serif;
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 800;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: #fff;
+  line-height: 1.32;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  margin: 0;
 }
 .product-sub {
-  font-size: 13.5px;
+  font-size: 14.5px;
   color: #a1a1aa;
-  line-height: 1.55;
+  line-height: 1.65;
+  margin: 0;
 }
 
 /* Price & CTA Box */
 .price-card {
-  background: var(--panel);
-  border: 1px solid var(--line-strong);
-  border-radius: 12px;
-  padding: 16px;
+  background: #121215;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
   width: 100%;
+  margin-top: 4px;
 }
 .price-row {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
   flex-wrap: wrap;
 }
 .cur-price {
   font-family: 'Archivo', sans-serif;
-  font-size: 26px;
+  font-size: 32px;
   font-weight: 900;
-  color: #fff;
+  color: #ffffff;
   letter-spacing: -0.02em;
+  line-height: 1;
 }
 .old-price {
-  font-size: 14px;
-  color: var(--muted-2);
+  font-size: 16px;
+  color: #71717a;
   text-decoration: line-through;
   font-weight: 600;
 }
 .save-pill {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-  padding: 2px 6px;
-  border-radius: 4px;
+  color: #f87171;
+  padding: 4px 10px;
+  border-radius: 6px;
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
@@ -349,35 +355,35 @@ svg { display: block; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   background: var(--crimson);
-  color: #fff;
-  padding: 12px 18px;
-  border-radius: 10px;
+  color: #ffffff;
+  padding: 15px 22px;
+  border-radius: 12px;
   font-family: 'Archivo', sans-serif;
-  font-size: 13.5px;
+  font-size: 14.5px;
   font-weight: 800;
   letter-spacing: 0.02em;
-  box-shadow: 0 4px 18px var(--crimson-glow);
-  transition: all 0.2s;
+  box-shadow: 0 6px 20px var(--crimson-glow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-align: center;
   width: 100%;
 }
 .cta-btn-main:hover {
   background: var(--crimson-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px var(--crimson-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px var(--crimson-glow);
 }
 .guarantee-note {
-  font-size: 11px;
-  color: var(--muted-2);
+  font-size: 12px;
+  color: #71717a;
   display: flex;
   align-items: center;
-  gap: 6px;
-  justify-content: center;
-  text-align: center;
-  line-height: 1.4;
+  gap: 8px;
+  justify-content: flex-start;
+  text-align: left;
+  line-height: 1.45;
 }
 
 /* ---- VSL SECTION ---- */
@@ -1304,6 +1310,451 @@ svg { display: block; }
     font-size: 12.5px !important;
   }
 }
+
+/* ==================== REVIEWS SLIDER CSS ==================== */
+.reviews-section {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.reviews-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 28px;
+}
+.rh-badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.reviews-title {
+  font-family: 'Archivo', sans-serif;
+  font-size: clamp(22px, 3.8vw, 32px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.reviews-sub {
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.reviews-summary-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  color: #fff;
+  flex-wrap: wrap;
+}
+.rs-stars { color: #fbbf24; font-size: 14px; letter-spacing: 2px; }
+.rs-score { font-weight: 800; }
+.rs-sep { color: var(--muted-2); }
+.rs-count { color: var(--muted); }
+.rs-link {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #f87171;
+  border-bottom: 1px dashed rgba(248,113,113,.5);
+  margin-left: 4px;
+  transition: all .15s;
+}
+.rs-link:hover { color: #fff; border-bottom-color: #fff; }
+
+.reviews-slider-wrap {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.reviews-track-viewport {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 16px;
+  padding: 8px 2px;
+}
+.reviews-track {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.review-card {
+  flex: 0 0 calc(33.333% - 11px);
+  min-width: 260px;
+  background: #121212;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  transition: border-color .2s, transform .2s;
+}
+.review-card:hover {
+  border-color: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+}
+.rc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 8px;
+}
+.rc-stars {
+  color: #fbbf24;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+}
+.rc-badge {
+  font-size: 10.5px;
+  font-weight: 800;
+  background: rgba(34, 197, 94, 0.12);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.rc-text {
+  font-size: 13.8px;
+  color: #e4e4e7;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  flex-grow: 1;
+  font-style: normal;
+}
+.rc-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.rc-avatar {
+  overflow: hidden;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--crimson), #2a0408);
+  color: #fff;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.rc-info {
+  line-height: 1.3;
+}
+.rc-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+}
+.rc-avatar-img, .rc-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.rc-role {
+  font-size: 11.5px;
+  color: var(--muted-2);
+}
+
+.review-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #181818;
+  border: 1px solid var(--line-strong);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .2s;
+  z-index: 2;
+}
+.review-arrow:hover {
+  background: var(--crimson);
+  border-color: var(--crimson);
+  transform: scale(1.05);
+}
+.review-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.reviews-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.rev-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+  transition: all .25s;
+  cursor: pointer;
+}
+.rev-dot.active {
+  width: 24px;
+  background: var(--crimson-hover);
+}
+
+@media (max-width: 900px) {
+  .review-card {
+    flex: 0 0 calc(50% - 8px);
+  }
+}
+@media (max-width: 640px) {
+  .review-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
+  .review-arrow {
+    display: none; /* Mobile swipes or uses dots */
+  }
+  .reviews-track-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .reviews-track-viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .review-card {
+    scroll-snap-align: start;
+  }
+}
+
+
+/* ===== HEADER COUNTDOWN BADGE ===== */
+.header-countdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.header-countdown .hc-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f87171;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.header-countdown .hc-digits {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: 'Archivo', sans-serif;
+  color: #fff;
+}
+.header-countdown .hc-unit {
+  display: inline-flex;
+  align-items: baseline;
+}
+.header-countdown .hc-unit b {
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.header-countdown .hc-unit small {
+  font-size: 9.5px;
+  color: #888;
+  margin-left: 1px;
+  font-weight: 600;
+}
+.header-countdown .hc-sep {
+  color: rgba(255,255,255,.3);
+  font-size: 11px;
+  margin: 0 1px;
+}
+@media (max-width: 640px) {
+  .header-countdown .hc-label { display: none; }
+  .header-countdown { padding: 4px 8px; font-size: 11px; }
+}
+
+/* ===== AUTHORITY / PROOF FRAMES SLIDER ===== */
+.frames-section {
+  padding-top: 10px;
+  padding-bottom: 24px;
+}
+.frames-slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.frames-track-wrap {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 16px;
+  padding: 6px 2px;
+}
+.frames-track {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.frame-card {
+  flex: 0 0 calc(33.333% - 11px);
+  min-width: 270px;
+  background: #141418;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  transition: border-color .2s, transform .2s;
+}
+.frame-card:hover {
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+.frame-img-box {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: #1c1c22;
+  overflow: hidden;
+}
+.frame-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.frame-card:hover .frame-img {
+  transform: scale(1.03);
+}
+.frame-tag {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(8px);
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,0.3);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+.frame-caption {
+  padding: 16px 18px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.frame-caption h4 {
+  font-family: 'Archivo', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+.frame-caption p {
+  font-size: 13px;
+  color: #a1a1aa;
+  line-height: 1.5;
+  margin: 0;
+}
+.frames-nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #181818;
+  border: 1px solid var(--line-strong);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .2s;
+  z-index: 2;
+  font-size: 16px;
+}
+.frames-nav-btn:hover {
+  background: var(--crimson);
+  border-color: var(--crimson);
+  transform: scale(1.05);
+}
+.frames-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+.f-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+  transition: all .25s;
+  cursor: pointer;
+}
+.f-dot.active {
+  width: 22px;
+  background: var(--crimson-hover);
+}
+@media (max-width: 900px) {
+  .frame-card { flex: 0 0 calc(50% - 8px); }
+}
+@media (max-width: 640px) {
+  .frame-card { flex: 0 0 100%; min-width: 100%; }
+  .frames-nav-btn { display: none; }
+  .frames-track-wrap {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .frames-track-wrap::-webkit-scrollbar { display: none; }
+  .frame-card { scroll-snap-align: start; }
+}
+
 </style>
 </head>
 <body>
@@ -1316,8 +1767,8 @@ svg { display: block; }
       <span class="brand-badge">A Special Birthday Offer</span>
     </div>
     <div class="nav-actions">
-      <span class="nav-price">₦7,490</span>
-      <a href="/checkout" class="nav-btn checkout-link">Pre-Order Now</a>
+      <span class="nav-price">₦4,987</span>
+      <a href="/checkout?price=ads" class="nav-btn checkout-link">Pre-Order Now</a>
     </div>
   </div>
 </div>
@@ -1331,7 +1782,7 @@ svg { display: block; }
     <div class="gallery-wrap">
       <div class="main-img-box">
         <img id="mainImg" src="/assets/nexora-grand-stack-mockup.jpg" alt="NEXORA Complete 3D Value Stack">
-        <div class="img-badge">Instant Digital Access &middot; October 2026 Release</div>
+        
       </div>
       <div class="thumbs-row">
         <button class="thumb-btn active" onclick="setImg('/assets/nexora-grand-stack-mockup.jpg', this)">
@@ -1381,13 +1832,13 @@ svg { display: block; }
       <!-- Purchase Box -->
       <div class="price-card">
         <div class="price-row">
-          <div class="cur-price">₦7,490</div>
+          <div class="cur-price">₦4,987</div>
           <div class="old-price">₦25,000</div>
           <div class="save-pill">Birthday Pre-order</div>
         </div>
 
-        <a href="/checkout" class="cta-btn-main checkout-link">
-          <span>PRE-ORDER NEXORA FOR ₦7,490</span>
+        <a href="/checkout?price=ads" class="cta-btn-main checkout-link">
+          <span>PRE-ORDER NEXORA FOR ₦4,987</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
 
@@ -1478,8 +1929,8 @@ svg { display: block; }
       </ul>
 
       <div style="margin-top: 24px;">
-        <a href="/checkout" class="cta-btn-main checkout-link" style="max-width: 440px;">
-          <span>GET NEXORA AT THE BIRTHDAY PRICE (₦7,490)</span>
+        <a href="/checkout?price=ads" class="cta-btn-main checkout-link" style="max-width: 440px;">
+          <span>GET NEXORA AT THE BIRTHDAY PRICE (₦4,987)</span>
         </a>
       </div>
     </div>
@@ -2009,7 +2460,7 @@ svg { display: block; }
         </div>
         <div class="gt-bday-row">
           <span class="gt-lbl">Birthday Pre-order:</span>
-          <span class="gt-deal">₦7,490</span>
+          <span class="gt-deal">₦4,987</span>
         </div>
       </div>
     </div>
@@ -2071,8 +2522,8 @@ svg { display: block; }
     </div>
 
     <div style="margin-top: 28px; text-align: center;">
-      <a href="/checkout" class="cta-btn-main checkout-link" style="max-width: 440px; margin: 0 auto;">
-        <span>YES, I WANT NEXORA (₦7,490)</span>
+      <a href="/checkout?price=ads" class="cta-btn-main checkout-link" style="max-width: 440px; margin: 0 auto;">
+        <span>YES, I WANT NEXORA (₦4,987)</span>
       </a>
     </div>
   </div>
@@ -2125,29 +2576,69 @@ svg { display: block; }
     </div>
   </div>
 
-  <!-- WHY AM I SELLING THIS FOR ONLY ₦7,490? -->
+<!-- ==================== COUNTDOWN SECTION ==================== -->
+  <div class="content-section" id="countdown-section" style="text-align: center; padding-top: 10px;">
+    <div class="countdown-card" style="background:#09090b;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:38px 24px;box-shadow:0 20px 50px rgba(0,0,0,0.4);max-width:640px;margin:0 auto;text-align:center;">
+      <h2 style="font-family:'Archivo',sans-serif;color:#ffffff;font-size:clamp(22px,4vw,32px);font-weight:900;margin-bottom:12px;letter-spacing:-0.02em;">THIS OFFER WILL NOT LAST FOREVER</h2>
+      <p style="max-width:540px;margin:0 auto 28px;color:#a1a1aa;font-size:14.5px;line-height:1.6;">
+        Once this countdown reaches zero, the birthday pre-order closes and NEXORA will officially launch at <strong style="color:#ffffff;">₦25,000</strong>. You will no longer be able to secure complete lifetime access for <strong style="color:#f87171;">₦4,987</strong>.
+      </p>
+
+      <div class="countdown-eyebrow" style="color:#22c55e;font-size:12px;letter-spacing:2px;font-weight:800;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        &#9679; PRE-ORDER CLOSES IN
+      </div>
+      
+      <div class="countdown-grid" id="nexora-countdown" style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px;">
+        <div class="countdown-box" style="display:flex;flex-direction:column;align-items:center;min-width:64px;flex:1;">
+          <div class="countdown-num" id="cd-days" style="width:100%;background:#141418;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 4px;font-family:'Archivo',sans-serif;font-size:32px;font-weight:900;color:#ffffff;line-height:1;">00</div>
+          <div class="countdown-label" style="margin-top:6px;font-family:'Archivo',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:1px;color:#71717a;">DAYS</div>
+        </div>
+        <div class="countdown-sep" style="font-size:24px;font-weight:800;color:rgba(255,255,255,0.3);margin-bottom:16px;">:</div>
+        <div class="countdown-box" style="display:flex;flex-direction:column;align-items:center;min-width:64px;flex:1;">
+          <div class="countdown-num" id="cd-hours" style="width:100%;background:#141418;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 4px;font-family:'Archivo',sans-serif;font-size:32px;font-weight:900;color:#ffffff;line-height:1;">00</div>
+          <div class="countdown-label" style="margin-top:6px;font-family:'Archivo',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:1px;color:#71717a;">HOURS</div>
+        </div>
+        <div class="countdown-sep" style="font-size:24px;font-weight:800;color:rgba(255,255,255,0.3);margin-bottom:16px;">:</div>
+        <div class="countdown-box" style="display:flex;flex-direction:column;align-items:center;min-width:64px;flex:1;">
+          <div class="countdown-num" id="cd-mins" style="width:100%;background:#141418;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 4px;font-family:'Archivo',sans-serif;font-size:32px;font-weight:900;color:#ffffff;line-height:1;">00</div>
+          <div class="countdown-label" style="margin-top:6px;font-family:'Archivo',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:1px;color:#71717a;">MINS</div>
+        </div>
+        <div class="countdown-sep" style="font-size:24px;font-weight:800;color:rgba(255,255,255,0.3);margin-bottom:16px;">:</div>
+        <div class="countdown-box" style="display:flex;flex-direction:column;align-items:center;min-width:64px;flex:1;">
+          <div class="countdown-num" id="cd-secs" style="width:100%;background:#141418;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 4px;font-family:'Archivo',sans-serif;font-size:32px;font-weight:900;color:#ffffff;line-height:1;">00</div>
+          <div class="countdown-label" style="margin-top:6px;font-family:'Archivo',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:1px;color:#71717a;">SECS</div>
+        </div>
+      </div>
+
+      <a href="/checkout?price=ads" class="cta-btn-main checkout-link" style="width:100%;max-width:480px;margin:0 auto;display:flex;align-items:center;justify-content:center;">
+        <span>LOCK IN YOUR ₦4,987 PRE-ORDER &rarr;</span>
+      </a>
+    </div>
+  </div>
+
+    <!-- WHY AM I SELLING THIS FOR ONLY ₦4,987? -->
   <div class="content-section">
     <div class="sec-eyebrow">TRANSPARENT PRICING</div>
-    <h2 class="sec-title">Why am I selling this for only ₦7,490?</h2>
+    <h2 class="sec-title">Why am I selling this for only ₦4,987?</h2>
 
     <div class="prose">
-      <p>NEXORA is not ₦7,490 because the lessons are worth only ₦7,490.</p>
+      <p>NEXORA is not ₦4,987 because the lessons are worth only ₦4,987.</p>
       <p>This is a birthday pre-order.</p>
       <p>The videos are currently being recorded and will be officially released in <strong>October 2026</strong> (exact date will be communicated in the group).</p>
       <p>Instead of waiting until everything is released and charging the regular price, I want people who believe in the offer early to secure access at a much lower price.</p>
       <p>I also know that many people who need this information may not be able to pay ₦25,000 immediately.</p>
       <p>For my birthday, I want to make the decision easier.</p>
-      <p>That is why you can pre-order NEXORA today for <strong>₦7,490</strong>.</p>
+      <p>That is why you can pre-order NEXORA today for <strong>₦4,987</strong>.</p>
       <p>Once NEXORA is officially released, the price will increase to ₦25,000.</p>
       <p>This is not a countdown trick. It is simply my way of rewarding the people who join during my birthday pre-order period.</p>
       
       <div class="price-card" style="margin-top: 24px;">
-        <div style="font-size: 14.5px; color: var(--muted);">Birthday Pre-order Price: <strong style="color:#fff;font-size:20px;">₦7,490</strong></div>
+        <div style="font-size: 14.5px; color: var(--muted);">Birthday Pre-order Price: <strong style="color:#fff;font-size:20px;">₦4,987</strong></div>
         <div style="font-size: 14.5px; color: var(--muted);">Regular Price: <strong style="color:#fff;font-size:17px;">₦25,000</strong></div>
         <div style="font-size: 14.5px; color: var(--muted);">Official Release: <strong style="color:#fff;font-size:17px;">October 2026 (Date communicated in group)</strong></div>
         
-        <a href="/checkout" class="cta-btn-main checkout-link" style="margin-top: 8px;">
-          <span>LOCK IN YOUR ₦7,490 PRE-ORDER</span>
+        <a href="/checkout?price=ads" class="cta-btn-main checkout-link" style="margin-top: 8px;">
+          <span>LOCK IN YOUR ₦4,987 PRE-ORDER</span>
         </a>
       </div>
     </div>
@@ -2171,10 +2662,10 @@ svg { display: block; }
       </ul>
     </div>
 
-    <div style="font-size: 16.5px; color: var(--muted); margin-top: 18px;">Your Price Today: <strong style="color:#fff;font-size:30px;font-family:'Archivo',sans-serif;">₦7,490</strong></div>
+    <div style="font-size: 16.5px; color: var(--muted); margin-top: 18px;">Your Price Today: <strong style="color:#fff;font-size:30px;font-family:'Archivo',sans-serif;">₦4,987</strong></div>
 
     <div style="margin-top: 22px;">
-      <a href="/checkout" class="cta-btn-main checkout-link" style="max-width: 440px; margin: 0 auto;">
+      <a href="/checkout?price=ads" class="cta-btn-main checkout-link" style="max-width: 440px; margin: 0 auto;">
         <span>PRE-ORDER NEXORA NOW</span>
       </a>
     </div>
@@ -2249,7 +2740,7 @@ svg { display: block; }
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Why should I pay before the lessons are released? <span>+</span></div>
-      <div class="faq-a">Pre-ordering allows you to secure complete access at the birthday price of ₦7,490. The regular price will be ₦25,000 after the official release.</div>
+      <div class="faq-a">Pre-ordering allows you to secure complete access at the birthday price of ₦4,987. The regular price will be ₦25,000 after the official release.</div>
     </div>
 
     <div class="faq-item">
@@ -2263,7 +2754,7 @@ svg { display: block; }
     </div>
 
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Are the bonuses included in the ₦7,490 price? <span>+</span></div>
+      <div class="faq-q" onclick="toggleFaq(this)">Are the bonuses included in the ₦4,987 price? <span>+</span></div>
       <div class="faq-a">Yes. All the bonuses listed on this page are included in your pre-order.</div>
     </div>
 
@@ -2288,13 +2779,54 @@ svg { display: block; }
     </div>
   </div>
 
+  
+  <!-- ==================== REVIEWS / WHAT OTHERS ARE SAYING SLIDER ==================== -->
+  <div class="content-section reviews-section" id="reviewsSection">
+    <div class="reviews-header" style="margin-bottom: 24px;">
+      <div class="rh-badge" style="font-size: 11px; letter-spacing: 1.5px; font-weight: 800;">★ VERIFIED PRE-ORDER REVIEWS</div>
+      <h2 class="reviews-title" style="margin-bottom: 0;">What Others Are Saying</h2>
+    </div>
+
+    <!-- Slider Container -->
+    <div class="reviews-slider-wrap">
+      <button class="review-arrow prev" id="revPrev" aria-label="Previous reviews" onclick="slideReviews(-1)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="reviews-track-viewport" id="reviewsViewport">
+        <div class="reviews-track" id="reviewsTrack">
+          <div class="review-card" style="max-width: 420px;">
+            <div class="rc-top">
+              <div class="rc-stars">★★★★★</div>
+              <span class="rc-badge">&#10003; Verified Purchase</span>
+            </div>
+            <p class="rc-text">"This is good"</p>
+            <div class="rc-author">
+              <div class="rc-avatar">TO</div>
+              <div class="rc-info">
+                <div class="rc-name">tom</div>
+                <div class="rc-role">Developer &middot; Angola</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="review-arrow next" id="revNext" aria-label="Next reviews" onclick="slideReviews(1)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <!-- Dots pagination -->
+    <div class="reviews-dots" id="reviewsDots"></div>
+  </div>
+
   <!-- FINAL CTA CARD -->
   <div class="content-section" style="text-align: center;">
     <div class="price-card" style="max-width: 580px; margin: 0 auto; text-align: center;">
-      <div style="font-size: 14.5px; color: var(--muted);">NEXORA Birthday Pre-order Price: <strong style="color:#fff;font-size:22px;">₦7,490</strong></div>
+      <div style="font-size: 14.5px; color: var(--muted);">NEXORA Birthday Pre-order Price: <strong style="color:#fff;font-size:22px;">₦4,987</strong></div>
       <div style="font-size: 13.5px; color: var(--muted);">Regular Price: <strong style="color:#fff;">₦25,000</strong> &middot; Official Release: <strong style="color:#fff;">October 2026</strong></div>
       
-      <a href="/checkout" class="cta-btn-main checkout-link" style="margin: 14px auto 0; max-width: 460px; width:100%;">
+      <a href="/checkout?price=ads" class="cta-btn-main checkout-link" style="margin: 14px auto 0; max-width: 460px; width:100%;">
         <span>YES, I AM READY FOR MY NEXT ERA</span>
       </a>
 
@@ -2304,6 +2836,7 @@ svg { display: block; }
     </div>
   </div>
 
+
 </div>
 
 <!-- STICKY BOTTOM BAR -->
@@ -2312,10 +2845,10 @@ svg { display: block; }
     <img src="/assets/tomide-williams.jpg" class="sb-img" alt="Tomide Williams">
     <div class="sb-info">
       <span class="sb-name">NEXORA: A Special Birthday Offer</span>
-      <span class="sb-price">₦7,490 <s style="color:var(--muted-2);font-weight:400;font-size:12px;">₦25,000</s></span>
+      <span class="sb-price">₦4,987 <s style="color:var(--muted-2);font-weight:400;font-size:12px;">₦25,000</s></span>
     </div>
   </div>
-  <a href="/checkout" class="nav-btn checkout-link">Pre-Order Now</a>
+  <a href="/checkout?price=ads" class="nav-btn checkout-link">Pre-Order Now</a>
 </div>
 
 <script>
@@ -2354,6 +2887,265 @@ function toggleFaq(el) {
     });
   }
 })();
+
+// ==================== DYNAMIC REVIEWS SLIDER SCRIPT ====================
+(function() {
+  var currentIdx = 0;
+  var track = document.getElementById('reviewsTrack');
+  var viewport = document.getElementById('reviewsViewport');
+  var dotsContainer = document.getElementById('reviewsDots');
+  var countLabel = document.getElementById('reviewCountLabel');
+  var reviewsData = [];
+
+  function getCardsPerView() {
+    if (window.innerWidth < 640) return 1;
+    if (window.innerWidth < 900) return 2;
+    return 3;
+  }
+
+  function renderDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    var totalCards = track.querySelectorAll('.review-card').length;
+    var perView = getCardsPerView();
+    var maxIdx = Math.max(0, totalCards - perView);
+    var pages = maxIdx + 1;
+    if (pages <= 1) return;
+
+    for (var i = 0; i < pages; i++) {
+      (function(idx) {
+        var dot = document.createElement('div');
+        dot.className = 'rev-dot' + (idx === currentIdx ? ' active' : '');
+        dot.onclick = function() {
+          currentIdx = idx;
+          updateSlider();
+        };
+        dotsContainer.appendChild(dot);
+      })(i);
+    }
+  }
+
+  window.slideReviews = function(delta) {
+    var totalCards = track.querySelectorAll('.review-card').length;
+    var perView = getCardsPerView();
+    var maxIdx = Math.max(0, totalCards - perView);
+    currentIdx += delta;
+    if (currentIdx < 0) currentIdx = maxIdx;
+    if (currentIdx > maxIdx) currentIdx = 0;
+    updateSlider();
+  };
+
+  function updateSlider() {
+    if (!track) return;
+    var totalCards = track.querySelectorAll('.review-card').length;
+    var perView = getCardsPerView();
+    var maxIdx = Math.max(0, totalCards - perView);
+    if (currentIdx > maxIdx) currentIdx = maxIdx;
+    if (currentIdx < 0) currentIdx = 0;
+
+    var card = track.querySelector('.review-card');
+    if (card) {
+      var gap = 16;
+      var cardWidth = card.offsetWidth + gap;
+      track.style.transform = 'translateX(-' + (currentIdx * cardWidth) + 'px)';
+    }
+
+    // Update dots
+    if (dotsContainer) {
+      var dots = dotsContainer.querySelectorAll('.rev-dot');
+      dots.forEach(function(d, i) {
+        if (i === currentIdx) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+    }
+  }
+
+  function getInitials(name) {
+    if (!name) return 'NW';
+    var p = name.trim().split(' ');
+    if (p.length === 1) return p[0].substring(0, 2).toUpperCase();
+    return (p[0][0] + p[1][0]).toUpperCase();
+  }
+
+  function createReviewCardHtml(r) {
+    var starStr = '★'.repeat(r.rating || 5) + '☆'.repeat(5 - (r.rating || 5));
+    var initials = getInitials(r.name);
+    var avatarHtml = r.avatar 
+      ? '<img src="' + escapeHtml(r.avatar) + '" alt="' + escapeHtml(r.name) + '" class="rc-avatar-img" />'
+      : initials;
+    var reviewBody = r.review || r.comment || '';
+    return '<div class="review-card">' +
+      '<div class="rc-top">' +
+        '<div class="rc-stars">' + starStr + '</div>' +
+        '<span class="rc-badge">&#10003; ' + (r.verified ? 'Verified Purchase' : 'Verified Pre-Order') + '</span>' +
+      '</div>' +
+      '<p class="rc-text">"' + escapeHtml(reviewBody) + '"</p>' +
+      '<div class="rc-author">' +
+        '<div class="rc-avatar' + (r.avatar ? ' has-img' : '') + '">' + avatarHtml + '</div>' +
+        '<div class="rc-info">' +
+          '<div class="rc-name">' + escapeHtml(r.name) + '</div>' +
+          '<div class="rc-role">' + escapeHtml(r.role || 'Verified Purchase') + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  async function loadReviews() {
+    try {
+      var res = await fetch('/api/feedback');
+      if (res.ok) {
+        var data = await res.json();
+        if (data && data.reviews && data.reviews.length > 0) {
+          reviewsData = data.reviews;
+          track.innerHTML = reviewsData.map(createReviewCardHtml).join('');
+          if (countLabel) {
+            countLabel.textContent = reviewsData.length + ' Verified Reviews';
+          }
+          currentIdx = 0;
+          renderDots();
+          updateSlider();
+        }
+      }
+    } catch (e) {
+      console.log('Reviews fetch fallback active');
+    }
+    renderDots();
+  }
+
+  window.addEventListener('resize', function() {
+    renderDots();
+    updateSlider();
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadReviews);
+  } else {
+    loadReviews();
+  }
+})();
+
+
+// ==================== MARKETPLACE COUNTDOWN TIMER ====================
+(function() {
+  var target = new Date('2026-10-01T00:00:00+01:00').getTime();
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  
+  function updateTimer() {
+    var now = new Date().getTime();
+    var diff = target - now;
+    if (diff < 0) diff = 0;
+    
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    var dEl = document.getElementById('cd-days');
+    var hEl = document.getElementById('cd-hours');
+    var mEl = document.getElementById('cd-mins');
+    var sEl = document.getElementById('cd-secs');
+    
+    if (dEl) dEl.textContent = pad(days);
+    if (hEl) hEl.textContent = pad(hours);
+    if (mEl) mEl.textContent = pad(mins);
+    if (sEl) sEl.textContent = pad(secs);
+    
+    var hd = document.getElementById('hc-d');
+    var hh = document.getElementById('hc-h');
+    var hm = document.getElementById('hc-m');
+    var hs = document.getElementById('hc-s');
+    if (hd) hd.textContent = pad(days);
+    if (hh) hh.textContent = pad(hours);
+    if (hm) hm.textContent = pad(mins);
+    if (hs) hs.textContent = pad(secs);
+  }
+  
+  setInterval(updateTimer, 1000);
+  updateTimer();
+})();
+
+// ==================== AUTHORITY PROOF FRAMES SLIDER JS ====================
+(function() {
+  var currentFrameIdx = 0;
+  var track = document.getElementById('framesTrack');
+  var dotsContainer = document.getElementById('framesDots');
+
+  function getFramesPerView() {
+    if (window.innerWidth < 640) return 1;
+    if (window.innerWidth < 900) return 2;
+    return 3;
+  }
+
+  function renderFrameDots() {
+    if (!dotsContainer || !track) return;
+    dotsContainer.innerHTML = '';
+    var totalCards = track.querySelectorAll('.frame-card').length;
+    var perView = getFramesPerView();
+    var maxIdx = Math.max(0, totalCards - perView);
+    var pages = maxIdx + 1;
+    if (pages <= 1) return;
+
+    for (var i = 0; i < pages; i++) {
+      (function(idx) {
+        var dot = document.createElement('div');
+        dot.className = 'f-dot' + (idx === currentFrameIdx ? ' active' : '');
+        dot.onclick = function() {
+          currentFrameIdx = idx;
+          updateFrameSlider();
+        };
+        dotsContainer.appendChild(dot);
+      })(i);
+    }
+  }
+
+  window.slideFrames = function(delta) {
+    if (!track) return;
+    var totalCards = track.querySelectorAll('.frame-card').length;
+    var perView = getFramesPerView();
+    var maxIdx = Math.max(0, totalCards - perView);
+    currentFrameIdx += delta;
+    if (currentFrameIdx < 0) currentFrameIdx = maxIdx;
+    if (currentFrameIdx > maxIdx) currentFrameIdx = 0;
+    updateFrameSlider();
+  };
+
+  function updateFrameSlider() {
+    if (!track) return;
+    var totalCards = track.querySelectorAll('.frame-card').length;
+    var perView = getFramesPerView();
+    var maxIdx = Math.max(0, totalCards - perView);
+    if (currentFrameIdx > maxIdx) currentFrameIdx = maxIdx;
+    if (currentFrameIdx < 0) currentFrameIdx = 0;
+
+    var card = track.querySelector('.frame-card');
+    if (card) {
+      var gap = 16;
+      var cardWidth = card.offsetWidth + gap;
+      track.style.transform = 'translateX(-' + (currentFrameIdx * cardWidth) + 'px)';
+    }
+
+    if (dotsContainer) {
+      var dots = dotsContainer.querySelectorAll('.f-dot');
+      dots.forEach(function(d, i) {
+        if (i === currentFrameIdx) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+    }
+  }
+
+  window.addEventListener('resize', function() {
+    renderFrameDots();
+    updateFrameSlider();
+  });
+
+  renderFrameDots();
+})();
+
 </script>
 </body>
 </html>

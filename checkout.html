@@ -199,7 +199,7 @@ main{padding:64px 0 80px;}
 
 <header class="hero">
   <div class="hero-badge">Birthday Pre-Order</div>
-  <h1>You're almost there.<br><span class="red">Lock in your ₦7,490 price.</span></h1>
+  <h1>You're almost there.<br><span class="red" id="heroPrice">Lock in your ₦7,490 price.</span></h1>
   <p class="hero-sub">Enter your details and pay securely with Paystack. Your full NEXORA access arrives on release day in October.</p>
 </header>
 
@@ -217,11 +217,11 @@ main{padding:64px 0 80px;}
       </div>
       <div class="err" id="err"></div>
 
-      <div class="order-summary">
-        <div class="sum-row"><span class="l">NEXORA birthday pre-order</span><span class="r">₦7,490</span></div>
-        <div class="sum-row discount"><span class="l">Pre-order discount</span><span class="r">&&8722;₦18,333</span></div>
+<div class="order-summary">
+        <div class="sum-row"><span class="l">NEXORA birthday pre-order</span><span class="r" id="sumPrice">₦7,490</span></div>
+        <div class="sum-row discount"><span class="l">Pre-order discount</span><span class="r" id="sumDiscount">&&8722;₦18,333</span></div>
         <div class="sum-row"><span class="l">Regular price</span><span class="r"><s style="color:var(--gray);">₦25,000</s></span></div>
-        <div class="sum-total"><span class="l">Total you pay today</span><span class="r">₦7,490</span></div>
+        <div class="sum-total"><span class="l">Total you pay today</span><span class="r" id="sumTotal">₦7,490</span></div>
       </div>
 
       <button class="btn" id="payBtn">Pay ₦7,490 securely</button>
@@ -244,6 +244,34 @@ main{padding:64px 0 80px;}
   // Cookie + sessionStorage + localStorage for durable partner tracking
   function getCookie(n){var v=document.cookie.match('(^|;)\\s*'+n+'=([^;]*)');return v?v[2]:'';}
   function setCookie(n,v,d){var e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=n+'='+v+';expires='+e.toUTCString()+';path=/;SameSite=Lax';}
+  function payText(n) { return 'Pay \u20A6' + (n || '4,987') + ' securely'; }
+  var TIER = 'marketplace';
+  var lastNaira = '7,490';
+  (function () {
+    var t = (new URLSearchParams(window.location.search)).get('price')
+      || (new URLSearchParams(window.location.search)).get('tier')
+      || getCookie('nexora_price')
+      || '';
+    t = (t === 'ads') ? 'ads' : 'marketplace';
+    TIER = t;
+    try {
+      sessionStorage.setItem('nexora_price', t);
+      localStorage.setItem('nexora_price', t);
+    } catch (e) {}
+    setCookie('nexora_price', t, 30);
+    if (t === 'ads') {
+      lastNaira = '4,987';
+      var hp = document.getElementById('heroPrice');
+      var sp = document.getElementById('sumPrice');
+      var sd = document.getElementById('sumDiscount');
+      var st = document.getElementById('sumTotal');
+      if (hp) hp.innerHTML = 'Lock in your \u20A64,987 price.';
+      if (sp) sp.textContent = '\u20A64,987';
+      if (st) st.textContent = '\u20A64,987';
+      if (sd) sd.textContent = '\u2212\u20A620,013';
+      btn.textContent = payText('4,987');
+    }
+  })();
   var partner = (new URLSearchParams(window.location.search)).get('pp')
     || getCookie('nexora_pp')
     || sessionStorage.getItem('nexora_pp')
@@ -284,7 +312,7 @@ main{padding:64px 0 80px;}
     btn.textContent = 'Preparing payment\u2026';
     showErr('');
 
-    fetch('/api/config')
+fetch('/api/config?tier=' + encodeURIComponent(TIER))
       .then(function (r) { return r.json(); })
       .then(function (cfg) {
         if (!cfg.ok || !cfg.publicKey) throw new Error(cfg.error || 'Paystack not configured yet.');
@@ -292,15 +320,16 @@ main{padding:64px 0 80px;}
       })
       .catch(function (err) {
         btn.disabled = false;
-        btn.textContent = 'Pay ₦7,490 securely';
+        btn.textContent = payText(lastNaira);
         showErr(err.message);
       });
   });
 
-  function startPayment(cfg) {
+function startPayment(cfg) {
     var reference = 'NEXORA-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
     var email = emailEl.value.trim();
     var name = nameEl.value.trim();
+    lastNaira = cfg.priceNaira || lastNaira;
 
     var handler = PaystackPop.setup({
       key: cfg.publicKey,
@@ -311,20 +340,28 @@ main{padding:64px 0 80px;}
       metadata: {
         custom_fields: [
           { display_name: 'Full Name', variable_name: 'name', value: name },
-          { display_name: 'Partner Code', variable_name: 'partner', value: partner || '' }
+          { display_name: 'Partner Code', variable_name: 'partner', value: partner || '' },
+          { display_name: 'Pricing Tier', variable_name: 'tier', value: TIER }
         ]
       },
       callback: function (response) {
-        var url = '/thank-you?ref=' + encodeURIComponent(response.reference) +
-                  '#email=' + encodeURIComponent(email) +
-                  '#name=' + encodeURIComponent(name) +
-                  (partner ? '#pp=' + encodeURIComponent(partner) : '') +
-                  (offer ? '#offer=' + encodeURIComponent(offer) : '');
+        try {
+          localStorage.setItem('nexora_cust_name', name);
+          localStorage.setItem('nexora_cust_email', email);
+          sessionStorage.setItem('nexora_cust_name', name);
+          sessionStorage.setItem('nexora_cust_email', email);
+        } catch (e) {}
+var url = '/thank-you?ref=' + encodeURIComponent(response.reference) +
+                  '&email=' + encodeURIComponent(email) +
+                  '&name=' + encodeURIComponent(name) +
+                  '&tier=' + encodeURIComponent(TIER) +
+                  (partner ? '&pp=' + encodeURIComponent(partner) : '') +
+                  (offer ? '&offer=' + encodeURIComponent(offer) : '');
         window.location.href = url;
       },
-      onClose: function () {
+onClose: function () {
         btn.disabled = false;
-        btn.textContent = 'Pay ₦7,490 securely';
+        btn.textContent = payText(lastNaira);
       }
     });
     handler.openIframe();
