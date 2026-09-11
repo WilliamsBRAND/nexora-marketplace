@@ -786,135 +786,19 @@
 
   </div>
 
-  <!-- STICKY BOTTOM BAR --> <div class="sticky-bar">   <div class="sb-left">     <img src="/assets/tomide-williams.jpg" class="sb-img" alt="Tomide Williams">     <div class="sb-info">       <span class="sb-name">NEXORA: A Special Birthday Offer</span>       <span class="sb-price">₦7,490 <s style="color:var(--muted-2);font-weight:400;font-size:12px;">₦25,000</s></span>     </div>   </div>   <a href="/checkout" class="nav-btn checkout-link">Pre-Order Now</a> </div>  <script> // Image gallery switch
-);
-  if (btn) btn.classList.add('active');
-}
+    <!-- STICKY BOTTOM BAR -->
+  <div class="sticky-bar">
+    <div class="sb-left">
+      <img src="/assets/tomide-williams.jpg" class="sb-img" alt="Tomide Williams">
+      <div class="sb-info">
+        <span class="sb-name">NEXORA: A Special Birthday Offer</span>
+        <span class="sb-price">₦7,490 <s style="color:var(--muted-2);font-weight:400;font-size:12px;">₦25,000</s></span>
+      </div>
+    </div>
+    <a href="/checkout" class="nav-btn checkout-link">Pre-Order Now</a>
+  </div>
 
-// Module accordion toggle
-function toggleModule(id) {
-  var el = typeof id === 'string' ? document.getElementById(id) : id;
-  if (el) {
-    el.classList.toggle('open');
-    var icon = el.querySelector('.mod-toggle-icon');
-    if (icon) {
-      icon.textContent = el.classList.contains('open') ? '−' : '+';
-    }
-  }
-}
-
-// FAQ accordion
-function toggleFaq(el) {
-  var parent = el.closest('.faq-item') || el.parentElement;
-  if (parent) {
-    parent.classList.toggle('open');
-    var span = parent.querySelector('.faq-q span');
-    if (span) {
-      span.textContent = parent.classList.contains('open') ? '−' : '+';
-    }
-  }
-}
-
-// Initialize click event listeners directly on DOM
-function initAccordions() {
-  document.querySelectorAll('.module-acc-header').forEach(function(hdr) {
-    hdr.onclick = function(e) {
-      var item = this.closest('.module-acc-item');
-      if (item) {
-        item.classList.toggle('open');
-        var icon = item.querySelector('.mod-toggle-icon');
-        if (icon) {
-          icon.textContent = item.classList.contains('open') ? '−' : '+';
-        }
-      }
-    };
-  });
-}
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAccordions);
-} else {
-  initAccordions();
-}
-
-// Preserve affiliate partner tracking on all checkout links (function() {   function getCookie(n){var v=document.cookie.match('(^|;)\\s*'+n+'=([^;]*)');return v?v[2]:'';}   var pp = (new URLSearchParams(window.location.search)).get('pp') || getCookie('nexora_pp') || localStorage.getItem('nexora_pp') || '';   if (pp) {     pp = pp.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 32);     document.querySelectorAll('a.checkout-link').forEach(function(a) {       var href = a.getAttribute('href') || '/checkout';       var sep = href.indexOf('?') >= 0 ? '&' : '?';       a.setAttribute('href', href + sep + 'pp=' + encodeURIComponent(pp));     });   } })(); 
-
-
- 
-  
-<script>
-// ---- HERO SLIDER LOGIC (INSTANT CLICK & AUTO-SLIDE) ----
-var HERO_SLIDES = [
-  { src: '/assets/hero-slide-overview.jpg', alt: 'NEXORA: Special Birthday Offer Overview' },
-  { src: '/assets/hero-slide-career.jpg', alt: 'Module 1: Growth & Career' },
-  { src: '/assets/hero-slide-money.jpg', alt: 'Module 2: Money & Income' },
-  { src: '/assets/hero-slide-marketing.jpg', alt: 'Marketing & Sales' },
-  { src: '/assets/hero-slide-linkedin.jpg', alt: 'Module 4: Personal Brand & LinkedIn' }
-];
-
-var currentHeroSlide = 0;
-var heroAutoTimer = null;
-var HERO_INTERVAL = 3200;
-
-function updateHeroDisplay(index) {
-  currentHeroSlide = (index + HERO_SLIDES.length) % HERO_SLIDES.length;
-  var mainEl = document.getElementById('mainImg');
-  if (mainEl) {
-    mainEl.src = HERO_SLIDES[currentHeroSlide].src;
-    mainEl.alt = HERO_SLIDES[currentHeroSlide].alt;
-  }
-  for (var i = 0; i < HERO_SLIDES.length; i++) {
-    var btn = document.getElementById('thumb-' + i);
-    if (btn) {
-      if (i === currentHeroSlide) {
-        btn.classList.add('active');
-        try {
-          btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
-        } catch(e) {}
-      } else {
-        btn.classList.remove('active');
-      }
-    }
-  }
-}
-
-function handleThumbClick(index) {
-  updateHeroDisplay(index);
-  pauseHeroAutoSlide();
-}
-
-function startHeroAutoSlide() {
-  if (heroAutoTimer) clearInterval(heroAutoTimer);
-  heroAutoTimer = setInterval(function() {
-    updateHeroDisplay(currentHeroSlide + 1);
-  }, HERO_INTERVAL);
-}
-
-function stopHeroAutoSlide() {
-  if (heroAutoTimer) {
-    clearInterval(heroAutoTimer);
-    heroAutoTimer = null;
-  }
-}
-
-function pauseHeroAutoSlide() {
-  stopHeroAutoSlide();
-  setTimeout(function() {
-    startHeroAutoSlide();
-  }, 7000); // 7 seconds pause on user click/touch
-}
-
-function openHeroModal() {
-  var mainEl = document.getElementById('mainImg');
-  if (mainEl && typeof openModal === 'function') {
-    openModal(mainEl.src, HERO_SLIDES[currentHeroSlide].alt);
-  }
-}
-
-// Start auto slide immediately
-startHeroAutoSlide();
-</script>
-
-  <!-- Lightbox Modal Markup -->
+  <!-- LIGHTBOX MODAL -->
   <div class="proof-modal-backdrop" id="proofModal" onclick="closeModal(event)">
     <div class="proof-modal-box" onclick="event.stopPropagation()">
       <button class="proof-modal-close" onclick="closeModalDirect()">✕</button>
@@ -924,28 +808,183 @@ startHeroAutoSlide();
   </div>
 
   <script>
-    function openModal(src, caption) {
-      const modal = document.getElementById('proofModal');
-      const img = document.getElementById('modalImg');
-      const cap = document.getElementById('modalCap');
-      img.src = src;
-      cap.textContent = caption || '';
+  // ==========================================
+  // 1. HERO IMAGE CAROUSEL & THUMBNAILS
+  // ==========================================
+  var HERO_SLIDES = [
+    { src: '/assets/hero-slide-overview.jpg', alt: 'NEXORA: Special Birthday Offer Overview' },
+    { src: '/assets/hero-slide-career.jpg', alt: 'Module 1: Growth & Career' },
+    { src: '/assets/hero-slide-money.jpg', alt: 'Module 2: Money & Income' },
+    { src: '/assets/hero-slide-marketing.jpg', alt: 'Marketing & Sales' },
+    { src: '/assets/hero-slide-linkedin.jpg', alt: 'Module 4: Personal Brand & LinkedIn' }
+  ];
+
+  var currentHeroSlide = 0;
+  var heroAutoTimer = null;
+  var HERO_INTERVAL = 3200;
+
+  function updateHeroDisplay(index) {
+    currentHeroSlide = (index + HERO_SLIDES.length) % HERO_SLIDES.length;
+    var mainEl = document.getElementById('mainImg');
+    if (mainEl) {
+      mainEl.src = HERO_SLIDES[currentHeroSlide].src;
+      mainEl.alt = HERO_SLIDES[currentHeroSlide].alt;
+    }
+    for (var i = 0; i < HERO_SLIDES.length; i++) {
+      var btn = document.getElementById('thumb-' + i);
+      if (btn) {
+        if (i === currentHeroSlide) {
+          btn.classList.add('active');
+          try {
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+          } catch(e) {}
+        } else {
+          btn.classList.remove('active');
+        }
+      }
+    }
+  }
+
+  function handleThumbClick(index) {
+    updateHeroDisplay(index);
+    pauseHeroAutoSlide();
+  }
+
+  function startHeroAutoSlide() {
+    if (heroAutoTimer) clearInterval(heroAutoTimer);
+    heroAutoTimer = setInterval(function() {
+      updateHeroDisplay(currentHeroSlide + 1);
+    }, HERO_INTERVAL);
+  }
+
+  function stopHeroAutoSlide() {
+    if (heroAutoTimer) {
+      clearInterval(heroAutoTimer);
+      heroAutoTimer = null;
+    }
+  }
+
+  function pauseHeroAutoSlide() {
+    stopHeroAutoSlide();
+    setTimeout(function() {
+      startHeroAutoSlide();
+    }, 7000);
+  }
+
+  function openHeroModal() {
+    var mainEl = document.getElementById('mainImg');
+    if (mainEl && typeof openModal === 'function') {
+      openModal(mainEl.src, HERO_SLIDES[currentHeroSlide].alt);
+    }
+  }
+
+  // ==========================================
+  // 2. MODULE ACCORDIONS
+  // ==========================================
+  function toggleModule(id) {
+    var el = typeof id === 'string' ? document.getElementById(id) : id;
+    if (el) {
+      el.classList.toggle('open');
+      var icon = el.querySelector('.mod-toggle-icon');
+      if (icon) {
+        icon.textContent = el.classList.contains('open') ? '−' : '+';
+      }
+    }
+  }
+
+  function initAccordions() {
+    document.querySelectorAll('.module-acc-header').forEach(function(hdr) {
+      hdr.onclick = function(e) {
+        var item = this.closest('.module-acc-item');
+        if (item) {
+          item.classList.toggle('open');
+          var icon = item.querySelector('.mod-toggle-icon');
+          if (icon) {
+            icon.textContent = item.classList.contains('open') ? '−' : '+';
+          }
+        }
+      };
+    });
+  }
+
+  // ==========================================
+  // 3. FAQ ACCORDIONS
+  // ==========================================
+  function toggleFaq(el) {
+    var parent = el.closest('.faq-item') || el.parentElement;
+    if (parent) {
+      parent.classList.toggle('open');
+      var span = parent.querySelector('.faq-q span');
+      if (span) {
+        span.textContent = parent.classList.contains('open') ? '−' : '+';
+      }
+    }
+  }
+
+  // ==========================================
+  // 4. LIGHTBOX MODAL
+  // ==========================================
+  function openModal(src, caption) {
+    const modal = document.getElementById('proofModal');
+    const img = document.getElementById('modalImg');
+    const cap = document.getElementById('modalCap');
+    if (img) img.src = src;
+    if (cap) cap.textContent = caption || '';
+    if (modal) {
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
-    function closeModalDirect() {
-      const modal = document.getElementById('proofModal');
+  }
+
+  function closeModalDirect() {
+    const modal = document.getElementById('proofModal');
+    if (modal) {
       modal.classList.remove('active');
       document.body.style.overflow = '';
     }
-    function closeModal(e) {
-      if (e.target.id === 'proofModal') {
-        closeModalDirect();
-      }
-    }
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModalDirect();
-    });
-  </script>
+  }
 
-</body> </html>
+  function closeModal(e) {
+    if (e.target && e.target.id === 'proofModal') {
+      closeModalDirect();
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModalDirect();
+  });
+
+  // ==========================================
+  // 5. AFFILIATE / PARTNER TRACKING
+  // ==========================================
+  (function() {
+    function getCookie(n) {
+      var v = document.cookie.match('(^|;)\\s*' + n + '=([^;]*)');
+      return v ? v[2] : '';
+    }
+    var pp = (new URLSearchParams(window.location.search)).get('pp') || getCookie('nexora_pp') || localStorage.getItem('nexora_pp') || '';
+    if (pp) {
+      pp = pp.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 32);
+      document.querySelectorAll('a.checkout-link').forEach(function(a) {
+        var href = a.getAttribute('href') || '/checkout';
+        var sep = href.indexOf('?') >= 0 ? '&' : '?';
+        a.setAttribute('href', href + sep + 'pp=' + encodeURIComponent(pp));
+      });
+    }
+  })();
+
+  // ==========================================
+  // 6. INITIALIZATION ON DOM READY
+  // ==========================================
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initAccordions();
+      startHeroAutoSlide();
+    });
+  } else {
+    initAccordions();
+    startHeroAutoSlide();
+  }
+  </script>
+</body>
+</html>
