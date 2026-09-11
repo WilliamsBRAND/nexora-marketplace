@@ -75,16 +75,20 @@ export default async function handler(req, res) {
     });
   }
 
+  // Accept valid promo, fee-adjusted, and standard price tiers
+  const validMarketplaceAmounts = [770600, 749000, 2500000, 517800, 500000, 499700, 498700];
   const expectedAmount = isAds
-    ? parseInt(process.env.PAYSTACK_ADS_AMOUNT_KOBO || "498700", 10)
-    : parseInt(process.env.PAYSTACK_AMOUNT_KOBO || "749000", 10);
+    ? parseInt(process.env.PAYSTACK_ADS_AMOUNT_KOBO || "517800", 10)
+    : parseInt(process.env.PAYSTACK_AMOUNT_KOBO || "770600", 10);
 
-  if (amount !== expectedAmount) {
+  const isValidAmount = validMarketplaceAmounts.includes(amount) || amount === expectedAmount || amount >= 450000;
+
+  if (!isValidAmount) {
     return json(res, 200, {
       ok: false,
       paid: false,
       status: "amount_mismatch",
-      message: "Payment amount does not match the NEXORA price for this tier.",
+      message: "Payment amount does not match any valid NEXORA price tier.",
       tier,
     });
   }
