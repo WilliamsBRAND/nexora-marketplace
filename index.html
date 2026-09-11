@@ -945,9 +945,11 @@
       if (btn) {
         if (i === currentHeroSlide) {
           btn.classList.add('active');
-          try {
-            btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
-          } catch(e) {}
+          var thumbsRow = document.getElementById('thumbsRow');
+          if (thumbsRow) {
+            var targetLeft = btn.offsetLeft - (thumbsRow.clientWidth / 2) + (btn.clientWidth / 2);
+            thumbsRow.scrollTo({ left: targetLeft, behavior: 'smooth' });
+          }
         } else {
           btn.classList.remove('active');
         }
