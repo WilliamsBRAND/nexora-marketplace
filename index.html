@@ -369,6 +369,82 @@
 .faq-a { display: none; }
 .faq-item.open .faq-a { display: block !important; }
 
+
+  /* Hero 6-Module Quick Overview */
+  .hero-modules-preview {
+    background: rgba(18, 18, 22, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 14px;
+  }
+  .hmp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .hmp-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #a1a1aa;
+    text-transform: uppercase;
+  }
+  .hmp-badge {
+    background: rgba(122, 10, 21, 0.4);
+    border: 1px solid rgba(155, 13, 26, 0.6);
+    color: #fca5a5;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .hmp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .hmp-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 8px 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .hmp-item:hover {
+    background: rgba(122, 10, 21, 0.25);
+    border-color: rgba(155, 13, 26, 0.5);
+    transform: translateY(-1px);
+  }
+  .hmp-num {
+    font-size: 10.5px;
+    font-weight: 800;
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.12);
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .hmp-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #e4e4e7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 600px) {
+    .hmp-grid {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+
 </style> </head> <body>  <!-- TOP NAVBAR --> <div class="nav-wrap">   <div class="navbar">     <div class="brand-box">       <span class="brand-title">NEXORA</span>       <span class="brand-badge">A Special Birthday Offer</span>     </div>     <div class="nav-actions">       <span class="nav-price">₦7,490</span>       <a href="/checkout" class="nav-btn checkout-link">Pre-Order Now</a>     </div>   </div> </div>  <div class="container">    <!-- 2-COLUMN SHOWCASE HERO -->
   <div class="product-hero">
     <!-- LEFT: Visual Gallery (Portrait Flyer Carousel) -->
@@ -448,6 +524,40 @@
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           <span>Secure Paystack checkout. You will receive instant confirmation & WhatsApp access.</span>
         </div>
+
+        <div class="hero-modules-preview">
+          <div class="hmp-header">
+            <span class="hmp-title">6 Core Curriculum Modules</span>
+            <span class="hmp-badge">33 Video Lessons</span>
+          </div>
+          <div class="hmp-grid">
+            <a href="#mod-1" class="hmp-item" onclick="toggleModule('mod-1')">
+              <span class="hmp-num">01</span>
+              <span class="hmp-name">Growth & Career Planning</span>
+            </a>
+            <a href="#mod-2" class="hmp-item" onclick="toggleModule('mod-2')">
+              <span class="hmp-num">02</span>
+              <span class="hmp-name">Money, Income & Sales</span>
+            </a>
+            <a href="#mod-3" class="hmp-item" onclick="toggleModule('mod-3')">
+              <span class="hmp-num">03</span>
+              <span class="hmp-name">Marketing & Audience</span>
+            </a>
+            <a href="#mod-4" class="hmp-item" onclick="toggleModule('mod-4')">
+              <span class="hmp-num">04</span>
+              <span class="hmp-name">Personal Brand & LinkedIn</span>
+            </a>
+            <a href="#mod-5" class="hmp-item" onclick="toggleModule('mod-5')">
+              <span class="hmp-num">05</span>
+              <span class="hmp-name">Tech, AI & Web Apps</span>
+            </a>
+            <a href="#mod-6" class="hmp-item" onclick="toggleModule('mod-6')">
+              <span class="hmp-num">06</span>
+              <span class="hmp-name">Life & Personal Growth</span>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
