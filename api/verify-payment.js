@@ -1,15 +1,4 @@
-// NEXORA — server-side Paystack transaction verification + paid confirmation.
-// This runs ONLY on Vercel (secret keys are never exposed to the browser).
-//
-// Two separate Paystack accounts + two separate Google Sheets:
-//  - marketplace (default): PAYSTACK_SECRET_KEY  + SHEET_WEBHOOK_URL
-//  - ads / sales page:      PAYSTACK_ADS_SECRET_KEY + SHEET_ADS_WEBHOOK_URL
-//
-// Flow: checkout.html -> Paystack inline -> redirect to /thank-you.html?ref=REF&tier=..
-//       thank-you.html -> GET /api/verify-payment?reference=REF&email=..&name=..&tier=..
-//       This function verifies the transaction with the matching Paystack secret key,
-//       then POSTs the verified row to the matching Apps Script webhook (Google Sheet).
-
+// NEXORA — server-side Paystack transaction verification (Marketplace)
 const PAYSTACK_VERIFY = "https://api.paystack.co/transaction/verify/";
 
 function json(res, status, body) {
@@ -27,20 +16,14 @@ export default async function handler(req, res) {
   const email = url.searchParams.get("email") || "";
   const name = url.searchParams.get("name") || "";
   const partner = url.searchParams.get("pp") || "";
-  const offerSlug = url.searchParams.get("offer") || "nexora";
-  const tier = (url.searchParams.get("tier") || "").toLowerCase() === "ads" ? "ads" : "marketplace";
+  const phone = url.searchParams.get("phone") || "";
 
-  const isAds = tier === "ads";
-  const secretKey = isAds
-    ? (process.env.PAYSTACK_ADS_SECRET_KEY || "")
-    : (process.env.PAYSTACK_SECRET_KEY || "");
+  const secretKey = process.env.PAYSTACK_SECRET_KEY || "";
 
   if (!secretKey) {
     return json(res, 500, {
       ok: false,
-      error: isAds
-        ? "Paystack ads secret key (PAYSTACK_ADS_SECRET_KEY) not configured on server."
-        : "Paystack marketplace secret key (PAYSTACK_SECRET_KEY) not configured on server.",
+      error: "Paystack marketplace secret key (PAYSTACK_SECRET_KEY) not configured on server.",
     });
   }
 
@@ -75,34 +58,14 @@ export default async function handler(req, res) {
     });
   }
 
-  // Accept valid promo, fee-adjusted, and standard price tiers
-  const validMarketplaceAmounts = [770600, 749000, 2500000, 517800, 500000, 499700, 498700];
-  const expectedAmount = isAds
-    ? parseInt(process.env.PAYSTACK_ADS_AMOUNT_KOBO || "517800", 10)
-    : parseInt(process.env.PAYSTACK_AMOUNT_KOBO || "770600", 10);
-
-  const isValidAmount = validMarketplaceAmounts.includes(amount) || amount === expectedAmount || amount >= 450000;
-
-  if (!isValidAmount) {
-    return json(res, 200, {
-      ok: false,
-      paid: false,
-      status: "amount_mismatch",
-      message: "Payment amount does not match any valid NEXORA price tier.",
-      tier,
-    });
-  }
-
-  // Verified: success + correct amount. Log to the tier's own Google Sheet via Apps Script webhook.
-  const sheetWebhook = isAds
-    ? (process.env.SHEET_ADS_WEBHOOK_URL || "")
-    : (process.env.SHEET_WEBHOOK_URL || "");
+  // Log to Google Sheet via Apps Script webhook
+  const sheetWebhook = process.env.SHEET_WEBHOOK_URL || "";
   let logged = false;
-  const source = partner
-    ? `Affiliate (${partner}) - ${isAds ? 'Ads' : 'Marketplace'}`
-    : (isAds ? "Ads (Sales Page)" : "Organic (Marketplace)");
+  const channel = "Marketplace";
+  const source = partner ? `Affiliate (${partner}) - Marketplace` : "Marketplace (Direct/Organic)";
   const customerEmail = email || data.customer?.email || "";
   const customerName = name || (data.customer?.first_name ? (data.customer.first_name + " " + (data.customer.last_name || "")).trim() : "");
+  const customerPhone = phone || data.customer?.phone || "";
   const amountNaira = String(data.amount / 100);
 
   if (sheetWebhook) {
@@ -110,22 +73,25 @@ export default async function handler(req, res) {
       const fp = new URL(sheetWebhook);
       fp.searchParams.set("email", customerEmail);
       fp.searchParams.set("name", customerName);
+      fp.searchParams.set("phone", customerPhone);
       fp.searchParams.set("amount", amountNaira);
       fp.searchParams.set("reference", reference);
       fp.searchParams.set("status", status);
-      fp.searchParams.set("partner", partner || "");
+      fp.searchParams.set("partner", partner || "None");
+      fp.searchParams.set("channel", channel);
       fp.searchParams.set("source", source);
-      fp.searchParams.set("tier", tier);
 
       const payload = {
         name: customerName,
         email: customerEmail,
+        phone: customerPhone,
         amount: amountNaira,
         reference: reference,
         status: status,
-        partner: partner || "",
+        partner: partner || "None",
+        channel: channel,
         source: source,
-        tier: tier,
+        timestamp: new Date().toISOString(),
       };
 
       const sr = await fetch(fp.toString(), {
@@ -149,10 +115,11 @@ export default async function handler(req, res) {
     customer: {
       email: customerEmail,
       name: customerName,
+      phone: customerPhone,
     },
     paid_at: data.paid_at,
     partner: partner || null,
-    tier,
+    channel,
     source,
     sheet_logged: logged,
   });
