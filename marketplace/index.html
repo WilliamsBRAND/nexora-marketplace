@@ -450,11 +450,11 @@
     <!-- LEFT: Visual Gallery (Portrait Flyer Carousel) -->
     <div class="gallery-wrap" id="heroGallery">
       <div class="main-img-box" id="mainImgBox" onclick="openHeroModal()">
-        <img id="mainImg" src="/assets/hero-slide-overview.jpg" alt="NEXORA Special Birthday Offer Overview">
+        <img id="mainImg" src="/assets/hero-slide-main.jpg" alt="NEXORA Special Birthday Offer Overview">
       </div>
       <div class="thumbs-row" id="thumbsRow">
-        <button type="button" class="thumb-btn active" id="thumb-0" onclick="handleThumbClick(0)" title="Special Birthday Offer">
-          <img src="/assets/hero-slide-overview.jpg" alt="Special Birthday Offer">
+        <button type="button" class="thumb-btn active" id="thumb-0" onclick="handleThumbClick(0)" title="NEXORA Main Offer">
+          <img src="/assets/hero-slide-main.jpg" alt="Special Birthday Offer">
         </button>
         <button type="button" class="thumb-btn" id="thumb-1" onclick="handleThumbClick(1)" title="Module 1: Growth & Career">
           <img src="/assets/hero-slide-career.jpg" alt="Growth & Career">
@@ -462,11 +462,17 @@
         <button type="button" class="thumb-btn" id="thumb-2" onclick="handleThumbClick(2)" title="Module 2: Money & Income">
           <img src="/assets/hero-slide-money.jpg" alt="Money & Income">
         </button>
-        <button type="button" class="thumb-btn" id="thumb-3" onclick="handleThumbClick(3)" title="Marketing & Sales">
-          <img src="/assets/hero-slide-marketing.jpg" alt="Marketing and Sales">
+        <button type="button" class="thumb-btn" id="thumb-3" onclick="handleThumbClick(3)" title="Module 3: Marketing & Sales">
+          <img src="/assets/hero-slide-marketing.jpg" alt="Marketing & Sales">
         </button>
         <button type="button" class="thumb-btn" id="thumb-4" onclick="handleThumbClick(4)" title="Module 4: Personal Brand & LinkedIn">
           <img src="/assets/hero-slide-linkedin.jpg" alt="Personal Brand & LinkedIn">
+        </button>
+        <button type="button" class="thumb-btn" id="thumb-5" onclick="handleThumbClick(5)" title="Module 5: AI & Tech">
+          <img src="/assets/hero-slide-ai.jpg" alt="AI & Tech">
+        </button>
+        <button type="button" class="thumb-btn" id="thumb-6" onclick="handleThumbClick(6)" title="Module 6: Life & Personal Growth">
+          <img src="/assets/hero-slide-growth.jpg" alt="Life & Personal Growth">
         </button>
       </div>
     </div>
@@ -922,11 +928,13 @@
   // 1. HERO IMAGE CAROUSEL & THUMBNAILS
   // ==========================================
   var HERO_SLIDES = [
-    { src: '/assets/hero-slide-overview.jpg', alt: 'NEXORA: Special Birthday Offer Overview' },
+    { src: '/assets/hero-slide-main.jpg', alt: 'NEXORA: Special Birthday Offer Overview' },
     { src: '/assets/hero-slide-career.jpg', alt: 'Module 1: Growth & Career' },
     { src: '/assets/hero-slide-money.jpg', alt: 'Module 2: Money & Income' },
-    { src: '/assets/hero-slide-marketing.jpg', alt: 'Marketing & Sales' },
-    { src: '/assets/hero-slide-linkedin.jpg', alt: 'Module 4: Personal Brand & LinkedIn' }
+    { src: '/assets/hero-slide-marketing.jpg', alt: 'Module 3: Marketing & Sales' },
+    { src: '/assets/hero-slide-linkedin.jpg', alt: 'Module 4: Personal Brand & LinkedIn' },
+    { src: '/assets/hero-slide-ai.jpg', alt: 'Module 5: AI & Tech' },
+    { src: '/assets/hero-slide-growth.jpg', alt: 'Module 6: Life & Personal Growth' }
   ];
 
   var currentHeroSlide = 0;
@@ -1074,13 +1082,38 @@
       var v = document.cookie.match('(^|;)\\s*' + n + '=([^;]*)');
       return v ? v[2] : '';
     }
-    var pp = (new URLSearchParams(window.location.search)).get('pp') || getCookie('nexora_pp') || localStorage.getItem('nexora_pp') || '';
+    function setCookie(n, v, d) {
+      var e = new Date();
+      e.setTime(e.getTime() + d * 864e5);
+      document.cookie = n + '=' + v + ';expires=' + e.toUTCString() + ';path=/;SameSite=Lax';
+    }
+
+    var pp = (new URLSearchParams(window.location.search)).get('pp')
+      || getCookie('nexora_pp')
+      || sessionStorage.getItem('nexora_pp')
+      || localStorage.getItem('nexora_pp')
+      || '';
+
     if (pp) {
       pp = pp.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 32);
-      document.querySelectorAll('a.checkout-link').forEach(function(a) {
+      try {
+        sessionStorage.setItem('nexora_pp', pp);
+        localStorage.setItem('nexora_pp', pp);
+        setCookie('nexora_pp', pp, 30);
+      } catch (e) {}
+
+      // Track referral click
+      try {
+        fetch('https://partners.tomidewilliams.store/api/track?code=' + encodeURIComponent(pp) + '&product=nexora');
+      } catch (e) {}
+
+      // Update all checkout links across the entire page
+      document.querySelectorAll('a.checkout-link, a[href^="/checkout"], a[href*="/checkout"]').forEach(function(a) {
         var href = a.getAttribute('href') || '/checkout';
-        var sep = href.indexOf('?') >= 0 ? '&' : '?';
-        a.setAttribute('href', href + sep + 'pp=' + encodeURIComponent(pp));
+        if (href.indexOf('pp=') < 0) {
+          var sep = href.indexOf('?') >= 0 ? '&' : '?';
+          a.setAttribute('href', href + sep + 'pp=' + encodeURIComponent(pp));
+        }
       });
     }
   })();

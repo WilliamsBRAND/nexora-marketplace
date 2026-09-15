@@ -1,3 +1,5 @@
+import { getDb } from "./_db.js";
+
 // NEXORA — server-side Paystack transaction verification (Marketplace)
 const PAYSTACK_VERIFY = "https://api.paystack.co/transaction/verify/";
 
@@ -10,12 +12,32 @@ function paystackVerifyUrl(secretKey, reference) {
   return PAYSTACK_VERIFY + encodeURIComponent(reference);
 }
 
+function extractPartnerCode(data, queryPartner) {
+  if (queryPartner) return queryPartner.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 36);
+  const meta = data && data.metadata;
+  if (!meta) return '';
+  if (meta.partner) return String(meta.partner).replace(/[^A-Za-z0-9_-]/g, '').slice(0, 36);
+  if (meta.pp) return String(meta.pp).replace(/[^A-Za-z0-9_-]/g, '').slice(0, 36);
+  if (meta.partner_code) return String(meta.partner_code).replace(/[^A-Za-z0-9_-]/g, '').slice(0, 36);
+  const customFields = Array.isArray(meta.custom_fields) ? meta.custom_fields : [];
+  for (const f of customFields) {
+    const varName = String(f.variable_name || '').toLowerCase();
+    const dispName = String(f.display_name || '').toLowerCase();
+    if (varName === 'partner' || varName === 'pp' || varName === 'partner_code' ||
+        dispName === 'partner' || dispName === 'partner code') {
+      const v = String(f.value || '');
+      if (v) return v.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 36);
+    }
+  }
+  return '';
+}
+
 export default async function handler(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const reference = url.searchParams.get("reference") || "";
   const email = url.searchParams.get("email") || "";
   const name = url.searchParams.get("name") || "";
-  const partner = url.searchParams.get("pp") || "";
+  const partnerParam = url.searchParams.get("pp") || "";
   const phone = url.searchParams.get("phone") || "";
 
   const secretKey = process.env.PAYSTACK_SECRET_KEY || "";
@@ -58,15 +80,17 @@ export default async function handler(req, res) {
     });
   }
 
-  // Log to Google Sheet via Apps Script webhook
-  const sheetWebhook = process.env.SHEET_WEBHOOK_URL || "";
-  let logged = false;
-  const channel = "Marketplace";
-  const source = partner ? `Affiliate (${partner}) - Marketplace` : "Marketplace (Direct/Organic)";
   const customerEmail = email || data.customer?.email || "";
   const customerName = name || (data.customer?.first_name ? (data.customer.first_name + " " + (data.customer.last_name || "")).trim() : "");
   const customerPhone = phone || data.customer?.phone || "";
   const amountNaira = String(data.amount / 100);
+  const partnerCode = extractPartnerCode(data, partnerParam);
+  const channel = "Marketplace";
+  const source = partnerCode ? `Affiliate (${partnerCode}) - Marketplace` : "Marketplace (Direct/Organic)";
+
+  // 1. Log to Google Sheet via Apps Script webhook
+  const sheetWebhook = process.env.SHEET_WEBHOOK_URL || "";
+  let logged = false;
 
   if (sheetWebhook) {
     try {
@@ -77,7 +101,7 @@ export default async function handler(req, res) {
       fp.searchParams.set("amount", amountNaira);
       fp.searchParams.set("reference", reference);
       fp.searchParams.set("status", status);
-      fp.searchParams.set("partner", partner || "None");
+      fp.searchParams.set("partner", partnerCode || "None");
       fp.searchParams.set("channel", channel);
       fp.searchParams.set("source", source);
 
@@ -88,7 +112,7 @@ export default async function handler(req, res) {
         amount: amountNaira,
         reference: reference,
         status: status,
-        partner: partner || "None",
+        partner: partnerCode || "None",
         channel: channel,
         source: source,
         timestamp: new Date().toISOString(),
@@ -105,6 +129,91 @@ export default async function handler(req, res) {
     }
   }
 
+  // 2. Sync Order & Commission into Supabase
+  let dbSynced = false;
+  try {
+    const db = getDb();
+    if (db) {
+      const { data: product } = await db.from('products')
+        .select('id, slug, name, price_kobo, commission_type, commission_value')
+        .eq('reference_prefix', 'NEXORA')
+        .eq('status', 'active')
+        .maybeSingle();
+
+      if (product) {
+        // Idempotent order record
+        let orderId = null;
+        const { data: existingOrder } = await db.from('orders')
+          .select('id').eq('paystack_reference', reference).maybeSingle();
+
+        if (existingOrder) {
+          orderId = existingOrder.id;
+        } else {
+          const { data: newOrder } = await db.from('orders').insert({
+            product_id: product.id,
+            customer_email: customerEmail.toLowerCase(),
+            customer_name: customerName.trim() || null,
+            paystack_reference: reference,
+            amount_kobo: amount,
+            status: 'verified',
+            webhook_event: 'verify_sync',
+          }).select('id').single();
+          if (newOrder) orderId = newOrder.id;
+        }
+
+        // Affiliate commission
+        if (partnerCode) {
+          let { data: partner } = await db.from('partners')
+            .select('id, code, name, email')
+            .eq('code', partnerCode)
+            .eq('status', 'active')
+            .maybeSingle();
+
+          if (!partner && /^[0-9a-f-]{36}$/i.test(partnerCode)) {
+            const { data: pById } = await db.from('partners')
+              .select('id, code, name, email')
+              .eq('id', partnerCode)
+              .eq('status', 'active')
+              .maybeSingle();
+            if (pById) partner = pById;
+          }
+
+          if (partner) {
+            // Auto-enroll partner if not already in affiliate_products
+            await db.from('affiliate_products').upsert({
+              partner_id: partner.id,
+              product_id: product.id,
+              status: 'active'
+            }, { onConflict: 'partner_id,product_id' });
+
+            const commissionKobo = product.commission_type === 'fixed'
+              ? Math.round(parseFloat(product.commission_value || 0) * 100)
+              : Math.round(amount * (parseFloat(product.commission_value || 0) / 100));
+
+            const { data: existingComm } = await db.from('commissions')
+              .select('id').eq('paystack_reference', reference).maybeSingle();
+
+            if (!existingComm) {
+              await db.from('commissions').insert({
+                affiliate_id: partner.id,
+                product_id: product.id,
+                order_id: orderId,
+                customer_email: customerEmail.toLowerCase(),
+                paystack_reference: reference,
+                amount_kobo: amount,
+                commission_kobo: commissionKobo,
+                status: 'pending',
+              });
+            }
+          }
+        }
+        dbSynced = true;
+      }
+    }
+  } catch (dbErr) {
+    // Non-blocking fallback
+  }
+
   return json(res, 200, {
     ok: true,
     paid: true,
@@ -118,9 +227,10 @@ export default async function handler(req, res) {
       phone: customerPhone,
     },
     paid_at: data.paid_at,
-    partner: partner || null,
+    partner: partnerCode || null,
     channel,
     source,
     sheet_logged: logged,
+    db_synced: dbSynced,
   });
 }
