@@ -244,9 +244,10 @@ export default async function handler(req, res) {
               status: 'active'
             }, { onConflict: 'partner_id,product_id' });
 
+            const baseKobo = (product.price_kobo && product.price_kobo > 0) ? product.price_kobo : amount;
             const commissionKobo = product.commission_type === 'fixed'
               ? Math.round(parseFloat(product.commission_value || 0) * 100)
-              : Math.round(amount * (parseFloat(product.commission_value || 0) / 100));
+              : Math.round(baseKobo * (parseFloat(product.commission_value || 0) / 100));
 
             const { data: existingComm } = await db.from('commissions')
               .select('id').eq('paystack_reference', reference).maybeSingle();
