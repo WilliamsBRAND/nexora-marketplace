@@ -411,14 +411,16 @@ main{padding:64px 0 80px;}
 <script>
 (function () {
   var qs = new URLSearchParams(window.location.search);
-  var reference = qs.get('ref') || '';
+  var reference = qs.get('ref') || qs.get('reference') || '';
   var email = qs.get('email') || '';
   var name = qs.get('name') || '';
+  var phone = qs.get('phone') || '';
   try {
     if (!name) name = localStorage.getItem('nexora_cust_name') || sessionStorage.getItem('nexora_cust_name') || '';
     if (!email) email = localStorage.getItem('nexora_cust_email') || sessionStorage.getItem('nexora_cust_email') || '';
+    if (!phone) phone = localStorage.getItem('nexora_cust_phone') || sessionStorage.getItem('nexora_cust_phone') || '';
   } catch(e){}
-  var partner = qs.get('pp') || '';
+  var partner = qs.get('pp') || qs.get('ref_code') || qs.get('partner') || qs.get('p') || '';
   var offer = qs.get('offer') || '';
   var tier = qs.get('tier') || '';
   try {
@@ -444,6 +446,7 @@ main{padding:64px 0 80px;}
     var url = '/api/verify-payment?reference=' + encodeURIComponent(reference) +
               '&email=' + encodeURIComponent(email) +
               '&name=' + encodeURIComponent(name) +
+              (phone ? '&phone=' + encodeURIComponent(phone) : '') +
               '&tier=' + encodeURIComponent(tier) +
               (partner ? '&pp=' + encodeURIComponent(partner) : '') +
               (offer ? '&offer=' + encodeURIComponent(offer) : '');

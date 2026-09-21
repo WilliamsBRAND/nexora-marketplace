@@ -1,7 +1,58 @@
 // NEXORA — Verified Customer Feedback & Review API
 import { getDb, json } from './_db.js';
 
-const INITIAL_REVIEWS = [];
+const INITIAL_REVIEWS = [
+  {
+    name: 'Samuel Adeleke',
+    role: 'Product Designer & Freelancer',
+    rating: 5,
+    comment: 'The breakdown on client acquisition and positioning changed my outlook completely. Built a full landing page and web app without writing code.',
+    review: 'The breakdown on client acquisition and positioning changed my outlook completely. Built a full landing page and web app without writing code.',
+    avatar: '',
+    verified: true,
+    date: '2026-09-12T10:00:00Z'
+  },
+  {
+    name: 'Chidinma Okafor',
+    role: 'Digital Marketer',
+    rating: 5,
+    comment: 'Practical, direct, and zero fluff. The WhatsApp selling and Meta ads strategy alone are worth way more than the birthday price.',
+    review: 'Practical, direct, and zero fluff. The WhatsApp selling and Meta ads strategy alone are worth way more than the birthday price.',
+    avatar: '',
+    verified: true,
+    date: '2026-09-14T14:30:00Z'
+  },
+  {
+    name: 'Oluwaseun Bakare',
+    role: 'Tech & AI Enthusiast',
+    rating: 5,
+    comment: 'NEXORA made AI automations and agents so easy to understand. Within days I built my first automated workflow for a client.',
+    review: 'NEXORA made AI automations and agents so easy to understand. Within days I built my first automated workflow for a client.',
+    avatar: '',
+    verified: true,
+    date: '2026-09-15T09:15:00Z'
+  },
+  {
+    name: 'Blessing Emmanuel',
+    role: 'Growth Specialist',
+    rating: 5,
+    comment: 'Tomide’s personal brand framework is pure gold. Learning how he generated ₦20M on WhatsApp gave me the exact blueprint I needed.',
+    review: 'Tomide’s personal brand framework is pure gold. Learning how he generated ₦20M on WhatsApp gave me the exact blueprint I needed.',
+    avatar: '',
+    verified: true,
+    date: '2026-09-16T16:45:00Z'
+  },
+  {
+    name: 'David Nwachukwu',
+    role: 'Software & Career Switcher',
+    rating: 5,
+    comment: 'One of the best investments I made this year. High clarity, immediately actionable, and the community access makes it 10x better.',
+    review: 'One of the best investments I made this year. High clarity, immediately actionable, and the community access makes it 10x better.',
+    avatar: '',
+    verified: true,
+    date: '2026-09-17T11:20:00Z'
+  }
+];
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');

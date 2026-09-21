@@ -600,6 +600,23 @@ footer {
 <script>
 const COMMUNITY_URL = 'https://chat.whatsapp.com/LNC6ABmpaFN5b6we3ZuEpp';
 
+// Extract referral/partner code from URL or persistent storage
+function getQueryPartner() {
+  try {
+    const p = new URLSearchParams(window.location.search);
+    const code = p.get('p') || p.get('ref') || p.get('partner') || p.get('pp') || p.get('ref_code') || p.get('partner_code') || '';
+    if (code) {
+      const clean = code.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 36);
+      localStorage.setItem('nexora_pp', clean);
+      sessionStorage.setItem('nexora_pp', clean);
+      return clean;
+    }
+    return localStorage.getItem('nexora_pp') || sessionStorage.getItem('nexora_pp') || '';
+  } catch (e) {
+    return '';
+  }
+}
+
 function toggleOther(show) {
   const wrap = document.getElementById('otherInputWrap');
   const input = document.getElementById('heardFromOther');
@@ -625,15 +642,20 @@ async function handleRegistration(e) {
   errorMsg.textContent = '';
 
   const formData = new FormData(form);
+  const partnerCode = getQueryPartner();
+
   const data = {
-    name: formData.get('name'),
-    email: formData.get('email'),
-    phone: formData.get('phone'),
-    amountPaid: formData.get('amountPaid'),
-    heardFrom: formData.get('heardFrom'),
-    heardFromOther: formData.get('heardFromOther'),
-    moduleInterest: formData.get('moduleInterest'),
-    paymentProof: formData.get('paymentProof'),
+    name: (formData.get('name') || '').trim(),
+    email: (formData.get('email') || '').trim(),
+    phone: (formData.get('phone') || '').trim(),
+    amountPaid: (formData.get('amountPaid') || '').trim(),
+    partner: partnerCode || 'None',
+    partner_code: partnerCode || 'None',
+    ref_code: partnerCode || 'None',
+    heardFrom: formData.get('heardFrom') || '',
+    heardFromOther: (formData.get('heardFromOther') || '').trim(),
+    moduleInterest: formData.get('moduleInterest') || '',
+    paymentProof: (formData.get('paymentProof') || '').trim(),
   };
 
   submitBtn.disabled = true;
@@ -651,6 +673,13 @@ async function handleRegistration(e) {
     if (!res.ok || !result.ok) {
       throw new Error(result.error || 'Registration failed. Please check your details and try again.');
     }
+
+    // Save phone and details locally
+    try {
+      localStorage.setItem('nexora_cust_name', data.name);
+      localStorage.setItem('nexora_cust_email', data.email);
+      localStorage.setItem('nexora_cust_phone', data.phone);
+    } catch(e){}
 
     // Show Success View
     document.getElementById('formView').style.display = 'none';

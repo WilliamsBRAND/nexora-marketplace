@@ -13,15 +13,16 @@ export default async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const name = (body.name || '').trim();
-  const email = (body.email || '').trim().toLowerCase();
-  const phone = (body.phone || '').trim();
-  const rawAmount = String(body.amountPaid || body.amount || '').trim();
-  const heardFrom = (body.heardFrom || '').trim();
-  const heardFromOther = (body.heardFromOther || '').trim();
-  const moduleInterest = (body.moduleInterest || '').trim();
-  const paymentProof = (body.paymentProof || '').trim();
-  const partner = (body.partner || body.pp || '').trim();
+  const name = (body.name || body.fullName || body.full_name || body.customer_name || '').trim();
+  const email = (body.email || body.customer_email || '').trim().toLowerCase();
+  const phone = (body.phone || body.phone_number || body.phoneNumber || body.customer_phone || body.whatsapp || '').trim();
+  const rawAmount = String(body.amountPaid || body.amount_paid || body.amount || body.price || '').trim();
+  const heardFrom = (body.heardFrom || body.heard_from || '').trim();
+  const heardFromOther = (body.heardFromOther || body.heard_from_other || '').trim();
+  const moduleInterest = (body.moduleInterest || body.module_interest || body.module || '').trim();
+  const paymentProof = (body.paymentProof || body.payment_proof || body.proof || '').trim();
+  const partner = (body.partner || body.partner_code || body.partnerCode || body.ref_code || body.refCode || body.pp || body.ref || '').trim();
+  const clientRef = (body.reference || body.ref || body.ref_code || body.reference_code || '').trim();
 
   // Basic validation
   if (!name) return json(res, 400, { ok: false, error: 'Full name is required.' });
@@ -37,7 +38,7 @@ export default async function handler(req, res) {
   const amountKobo = Math.round(amountNumber * 100);
 
   const finalSource = heardFrom === 'Other' && heardFromOther ? `Other: ${heardFromOther}` : heardFrom;
-  const reference = `MANUAL-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+  const reference = clientRef || `MANUAL-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
 
   const db = getDb();
   let dbSaved = false;
@@ -83,31 +84,90 @@ export default async function handler(req, res) {
   if (sheetWebhook) {
     try {
       const fp = new URL(sheetWebhook);
+      
+      // All field name aliases in query parameters
       fp.searchParams.set('name', name);
+      fp.searchParams.set('fullName', name);
+      fp.searchParams.set('full_name', name);
+      fp.searchParams.set('customer_name', name);
+
       fp.searchParams.set('email', email);
+      fp.searchParams.set('customer_email', email);
+
       fp.searchParams.set('phone', phone);
+      fp.searchParams.set('phone_number', phone);
+      fp.searchParams.set('phoneNumber', phone);
+      fp.searchParams.set('customer_phone', phone);
+      fp.searchParams.set('whatsapp', phone);
+
       fp.searchParams.set('amount', finalAmountString);
+      fp.searchParams.set('amount_paid', finalAmountString);
+      fp.searchParams.set('amountPaid', finalAmountString);
+      fp.searchParams.set('amount_naira', finalAmountString);
+      fp.searchParams.set('paid_amount', finalAmountString);
+
       fp.searchParams.set('reference', reference);
-      fp.searchParams.set('status', 'manual_registration');
-      fp.searchParams.set('source', 'Manual Registration Form');
-      fp.searchParams.set('channel', 'Manual Registration');
+      fp.searchParams.set('ref', reference);
+      fp.searchParams.set('ref_code', reference);
+      fp.searchParams.set('refCode', reference);
+      fp.searchParams.set('reference_code', reference);
+      fp.searchParams.set('paystack_reference', reference);
+
       fp.searchParams.set('partner', partner || 'None');
+      fp.searchParams.set('partner_code', partner || 'None');
+      fp.searchParams.set('partnerCode', partner || 'None');
+      fp.searchParams.set('pp', partner || 'None');
+      fp.searchParams.set('affiliate', partner || 'None');
+
+      fp.searchParams.set('status', 'manual_registration');
+      fp.searchParams.set('source', finalSource || 'Manual Registration Form');
+      fp.searchParams.set('channel', 'Manual Registration');
+      fp.searchParams.set('heard_from', finalSource);
       fp.searchParams.set('module_interest', moduleInterest);
       fp.searchParams.set('proof', paymentProof || 'N/A');
 
+      // Comprehensive JSON body payload
       const payload = {
         name,
+        fullName: name,
+        full_name: name,
+        customer_name: name,
+
         email,
+        customer_email: email,
+
         phone,
+        phone_number: phone,
+        phoneNumber: phone,
+        customer_phone: phone,
+        whatsapp: phone,
+
         amount: finalAmountString,
+        amount_paid: finalAmountString,
+        amountPaid: finalAmountString,
+        amount_naira: finalAmountString,
+        paid_amount: finalAmountString,
+
         reference,
+        ref: reference,
+        ref_code: reference,
+        refCode: reference,
+        reference_code: reference,
+        paystack_reference: reference,
+
+        partner: partner || 'None',
+        partner_code: partner || 'None',
+        partnerCode: partner || 'None',
+        pp: partner || 'None',
+        affiliate: partner || 'None',
+
         status: 'manual_registration',
         channel: 'Manual Registration',
-        source: 'Manual Registration Form',
-        partner: partner || 'None',
+        source: finalSource || 'Manual Registration Form',
         heard_from: finalSource,
         module_interest: moduleInterest,
         proof: paymentProof || 'N/A',
+        payment_proof: paymentProof || 'N/A',
         timestamp: new Date().toISOString(),
       };
 
@@ -128,8 +188,10 @@ export default async function handler(req, res) {
     data: {
       name,
       email,
+      phone,
       amount: finalAmountString,
       reference,
+      partner: partner || 'None',
       dbSaved,
       sheetLogged,
     },

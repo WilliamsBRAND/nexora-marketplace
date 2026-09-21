@@ -2,12 +2,19 @@
 const TIERS = {
   marketplace: {
     publicKey: process.env.PAYSTACK_PUBLIC_KEY || '',
-    amountKobo: '770600', // ₦7,490 base + ₦216 Paystack processing fee = ₦7,706
-    priceNaira: '7,706',
+    amountKobo: '760000', // Standard retail price: ₦7,600
+    priceNaira: '7,600',
+  },
+  partner: {
+    publicKey: process.env.PAYSTACK_PUBLIC_KEY || '',
+    amountKobo: '608000', // 20% partner discount on ₦7,600 = ₦6,080
+    priceNaira: '6,080',
+    discountPercent: 20,
+    originalPriceNaira: '7,600',
   },
   ads: {
     publicKey: process.env.PAYSTACK_ADS_PUBLIC_KEY || process.env.PAYSTACK_PUBLIC_KEY || '',
-    amountKobo: '517800', // ₦4,997 base + ₦181 Paystack processing fee = ₦5,178
+    amountKobo: '517800',
     priceNaira: '5,178',
   },
 };
@@ -15,10 +22,18 @@ const TIERS = {
 export default function handler(req, res) {
   const currency = process.env.PAYSTACK_CURRENCY || 'NGN';
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-  const requestedTier = url.searchParams.get('tier') || 'marketplace';
-  const tier = TIERS[requestedTier] ? requestedTier : 'marketplace';
+  const pp = url.searchParams.get('pp') || url.searchParams.get('partner') || url.searchParams.get('ref') || '';
+  const requestedTier = url.searchParams.get('tier') || '';
+  
+  // If a partner referral code is present or partner tier requested, apply the 20% partner discount (₦6,080)
+  let tier = 'marketplace';
+  if (pp || requestedTier === 'partner') {
+    tier = 'partner';
+  } else if (requestedTier && TIERS[requestedTier]) {
+    tier = requestedTier;
+  }
+  
   const active = TIERS[tier];
-
   const publicKey = active.publicKey || process.env.PAYSTACK_PUBLIC_KEY || '';
 
   if (!publicKey) {
@@ -35,5 +50,8 @@ export default function handler(req, res) {
     tier,
     amount: active.amountKobo,
     priceNaira: active.priceNaira,
+    discountPercent: active.discountPercent || 0,
+    originalPriceNaira: active.originalPriceNaira || active.priceNaira,
+    partnerCode: pp || null,
   });
 }

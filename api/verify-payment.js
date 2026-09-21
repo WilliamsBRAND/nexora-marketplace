@@ -82,7 +82,7 @@ export default async function handler(req, res) {
 
   const customerEmail = email || data.customer?.email || "";
   const customerName = name || (data.customer?.first_name ? (data.customer.first_name + " " + (data.customer.last_name || "")).trim() : "");
-  const customerPhone = phone || data.customer?.phone || "";
+  const customerPhone = phone || data.customer?.phone || (data.metadata && (data.metadata.phone || data.metadata.phone_number || data.metadata.custom_fields?.find(f => f.variable_name === 'phone')?.value)) || "";
   const amountNaira = String(data.amount / 100);
   const partnerCode = extractPartnerCode(data, partnerParam);
   const channel = "Marketplace";
@@ -95,24 +95,82 @@ export default async function handler(req, res) {
   if (sheetWebhook) {
     try {
       const fp = new URL(sheetWebhook);
-      fp.searchParams.set("email", customerEmail);
+
+      // All field aliases in query parameters
       fp.searchParams.set("name", customerName);
+      fp.searchParams.set("fullName", customerName);
+      fp.searchParams.set("full_name", customerName);
+      fp.searchParams.set("customer_name", customerName);
+
+      fp.searchParams.set("email", customerEmail);
+      fp.searchParams.set("customer_email", customerEmail);
+
       fp.searchParams.set("phone", customerPhone);
+      fp.searchParams.set("phone_number", customerPhone);
+      fp.searchParams.set("phoneNumber", customerPhone);
+      fp.searchParams.set("customer_phone", customerPhone);
+      fp.searchParams.set("whatsapp", customerPhone);
+
       fp.searchParams.set("amount", amountNaira);
+      fp.searchParams.set("amount_paid", amountNaira);
+      fp.searchParams.set("amountPaid", amountNaira);
+      fp.searchParams.set("amount_naira", amountNaira);
+      fp.searchParams.set("paid_amount", amountNaira);
+
       fp.searchParams.set("reference", reference);
+      fp.searchParams.set("ref", reference);
+      fp.searchParams.set("ref_code", reference);
+      fp.searchParams.set("refCode", reference);
+      fp.searchParams.set("reference_code", reference);
+      fp.searchParams.set("paystack_reference", reference);
+
       fp.searchParams.set("status", status);
       fp.searchParams.set("partner", partnerCode || "None");
+      fp.searchParams.set("partner_code", partnerCode || "None");
+      fp.searchParams.set("partnerCode", partnerCode || "None");
+      fp.searchParams.set("pp", partnerCode || "None");
+      fp.searchParams.set("affiliate", partnerCode || "None");
+
       fp.searchParams.set("channel", channel);
       fp.searchParams.set("source", source);
 
+      // Comprehensive JSON body payload
       const payload = {
         name: customerName,
+        fullName: customerName,
+        full_name: customerName,
+        customer_name: customerName,
+
         email: customerEmail,
+        customer_email: customerEmail,
+
         phone: customerPhone,
+        phone_number: customerPhone,
+        phoneNumber: customerPhone,
+        customer_phone: customerPhone,
+        whatsapp: customerPhone,
+
         amount: amountNaira,
+        amount_paid: amountNaira,
+        amountPaid: amountNaira,
+        amount_naira: amountNaira,
+        paid_amount: amountNaira,
+
         reference: reference,
+        ref: reference,
+        ref_code: reference,
+        refCode: reference,
+        reference_code: reference,
+        paystack_reference: reference,
+
         status: status,
+
         partner: partnerCode || "None",
+        partner_code: partnerCode || "None",
+        partnerCode: partnerCode || "None",
+        pp: partnerCode || "None",
+        affiliate: partnerCode || "None",
+
         channel: channel,
         source: source,
         timestamp: new Date().toISOString(),
