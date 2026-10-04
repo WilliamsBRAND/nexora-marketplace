@@ -1969,25 +1969,11 @@
         }
       });
 
-      // Apply 20% partner discount dynamically on landing page UI (₦20,000)
-      try {
-        var navPrice = document.querySelector('.nav-price');
-        if (navPrice) navPrice.innerHTML = '<s style="color:#a1a1aa;font-size:13px;margin-right:6px;">₦25,000</s>₦20,000';
-        var curPrices = document.querySelectorAll('.cur-price');
-        curPrices.forEach(function(el) { el.textContent = '₦20,000'; });
-        var savePills = document.querySelectorAll('.save-pill');
-        savePills.forEach(function(el) { el.textContent = 'Partner Link (20% OFF)'; });
-        var gtDeals = document.querySelectorAll('.gt-deal');
-        gtDeals.forEach(function(el) { el.textContent = '₦20,000'; });
-        var sbPrices = document.querySelectorAll('.sb-price');
-        sbPrices.forEach(function(el) { el.innerHTML = '₦20,000 <s style="color:var(--muted-2);font-weight:400;font-size:12px;">₦25,000</s>'; });
-        var tubBadge = document.querySelector('.tub-badge');
-        if (tubBadge) tubBadge.textContent = 'PARTNER DISCOUNT ACTIVATED';
-        var tubText = document.querySelector('.tub-text');
-        if (tubText) tubText.textContent = 'Special 20% Partner Discount Applied (₦20,000)';
-        var tubLinks = document.querySelectorAll('.tub-link');
-        tubLinks.forEach(function(el) { el.innerHTML = 'Get ₦20,000 Access &rarr;'; });
-      } catch (e) {}
+      // Pricing is intentionally NOT modified on this page.
+      // NEXORA is NGN 25,000 for everyone, in every price element and every
+      // line of copy. The partner NGN 5,000 discount is applied only on the
+      // checkout page (/checkout?pp=CODE), so no figure shown here can ever
+      // disagree with what the buyer is actually charged.
     }
   })();
 
