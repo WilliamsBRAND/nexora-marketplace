@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkout &middot; NEXORA Birthday Pre-Order</title>
+<title>Checkout &middot; NEXORA Lifetime Access</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -226,8 +226,8 @@ main{padding:48px 0 72px;}
 <body>
 
 <header class="hero" id="checkoutHero">
-  <div class="hero-badge" id="heroBadge">Birthday Pre-Order</div>
-  <h1 id="heroTitle">You're almost there.<br><span class="highlight">Lock in your ₦7,600 price</span></h1>
+  <div class="hero-badge" id="heroBadge">Lifetime Access</div>
+  <h1 id="heroTitle">You're almost there.<br><span class="highlight">Get NEXORA for ₦25,000</span></h1>
   <p class="hero-sub" id="heroSub">Enter your details and pay securely with Paystack. You will be redirected to the NEXORA VIP community immediately after payment is completed.</p>
 </header>
 
@@ -251,13 +251,11 @@ main{padding:48px 0 72px;}
       <div class="err" id="err"></div>
 
       <div class="order-summary" id="orderSummary">
-        <div class="sum-row"><span class="l">NEXORA pre-order (Marketplace)</span><span class="r">₦7,600</span></div>
-        <div class="sum-row discount"><span class="l">Pre-order discount</span><span class="r">&minus;₦17,400</span></div>
-        <div class="sum-row"><span class="l">Regular price</span><span class="r"><s style="color:var(--gray);">₦25,000</s></span></div>
-        <div class="sum-total"><span class="l">Total you pay today</span><span class="r" id="totalDisplay">₦7,600</span></div>
+        <div class="sum-row"><span class="l">NEXORA &mdash; Lifetime Access</span><span class="r">₦25,000</span></div>
+        <div class="sum-total"><span class="l">Total you pay today</span><span class="r" id="totalDisplay">₦25,000</span></div>
       </div>
 
-      <button class="btn" id="payBtn">Pay ₦7,600 securely</button>
+      <button class="btn" id="payBtn">Pay ₦25,000 securely</button>
       <div class="secure">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         <span><b>256-Bit Encrypted Checkout</b> &middot; Payments processed securely via Paystack</span>
@@ -308,21 +306,20 @@ main{padding:48px 0 72px;}
     setCookie('nexora_offer', offer, 30);
   }
 
-  // Dynamic partner discount UI (20% OFF -> ₦6,080)
-  var currentAmountKobo = partner ? '608000' : '760000';
-  var currentPriceNaira = partner ? '6,080' : '7,600';
+  // Dynamic partner discount UI (20% OFF -> ₦20,000)
+  var currentAmountKobo = partner ? '2000000' : '2500000';
+  var currentPriceNaira = partner ? '20,000' : '25,000';
 
   if (partner) {
     if (heroBadge) heroBadge.textContent = '20% Partner Discount Applied';
-    if (heroTitle) heroTitle.innerHTML = 'Exclusive Partner Privilege<br><span class="highlight">Lock in your ₦6,080 price (20% OFF)</span>';
+    if (heroTitle) heroTitle.innerHTML = 'Exclusive Partner Privilege<br><span class="highlight">Get NEXORA for ₦20,000 (20% OFF)</span>';
     if (orderSummary) {
       orderSummary.innerHTML =
-        '<div class="sum-row"><span class="l">Base retail price</span><span class="r">₦7,600</span></div>' +
-        '<div class="sum-row discount"><span class="l">Partner link discount (20% OFF)</span><span class="r">&minus;₦1,520</span></div>' +
-        '<div class="sum-row"><span class="l">Regular value</span><span class="r"><s style="color:var(--gray);">₦25,000</s></span></div>' +
-        '<div class="sum-total"><span class="l">Total you pay today</span><span class="r">₦6,080</span></div>';
+        '<div class="sum-row"><span class="l">Standard price</span><span class="r">₦25,000</span></div>' +
+        '<div class="sum-row discount"><span class="l">Partner link discount (20% OFF)</span><span class="r">&minus;₦5,000</span></div>' +
+        '<div class="sum-total"><span class="l">Total you pay today</span><span class="r">₦20,000</span></div>';
     }
-    if (btn) btn.textContent = 'Pay ₦6,080 securely';
+    if (btn) btn.textContent = 'Pay ₦20,000 securely';
   }
 
   function showErr(msg) { errEl.textContent = msg || ''; }

@@ -2,15 +2,15 @@
 const TIERS = {
   marketplace: {
     publicKey: process.env.PAYSTACK_PUBLIC_KEY || '',
-    amountKobo: '760000', // Standard retail price: ₦7,600
-    priceNaira: '7,600',
+    amountKobo: '2500000', // Standard price: ₦25,000
+    priceNaira: '25,000',
   },
   partner: {
     publicKey: process.env.PAYSTACK_PUBLIC_KEY || '',
-    amountKobo: '608000', // 20% partner discount on ₦7,600 = ₦6,080
-    priceNaira: '6,080',
+    amountKobo: '2000000', // 20% partner discount on ₦25,000 = ₦20,000
+    priceNaira: '20,000',
     discountPercent: 20,
-    originalPriceNaira: '7,600',
+    originalPriceNaira: '25,000',
   },
   ads: {
     publicKey: process.env.PAYSTACK_ADS_PUBLIC_KEY || process.env.PAYSTACK_PUBLIC_KEY || '',
@@ -25,7 +25,7 @@ export default function handler(req, res) {
   const pp = url.searchParams.get('pp') || url.searchParams.get('partner') || url.searchParams.get('ref') || '';
   const requestedTier = url.searchParams.get('tier') || '';
   
-  // If a partner referral code is present or partner tier requested, apply the 20% partner discount (₦6,080)
+  // If a partner referral code is present or partner tier requested, apply the 20% partner discount (₦20,000)
   let tier = 'marketplace';
   if (pp || requestedTier === 'partner') {
     tier = 'partner';
