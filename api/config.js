@@ -12,12 +12,7 @@ const TIERS = {
     discountPercent: 20,
     originalPriceNaira: '25,000',
   },
-  ads: {
-    publicKey: process.env.PAYSTACK_ADS_PUBLIC_KEY || process.env.PAYSTACK_PUBLIC_KEY || '',
-    amountKobo: '517800',
-    priceNaira: '5,178',
-  },
-};
+  };
 
 export default function handler(req, res) {
   const currency = process.env.PAYSTACK_CURRENCY || 'NGN';
